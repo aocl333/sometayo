@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>가맹점 관리 - 썸타요 Admin</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body style="background: var(--gray-100);">
+    <div class="admin-layout">
+        <!-- 사이드바 -->
+        <aside class="admin-sidebar">
+            <div class="admin-logo">🏝️ 썸타요 Admin</div>
+            <nav class="admin-nav">
+                <a href="dashboard.html">📊 대시보드</a>
+                <a href="members.html">👥 회원 관리</a>
+                <a href="stores.html" class="active">🏪 가맹점 관리</a>
+                <a href="tickets.html">🎫 티켓 관리</a>
+                <a href="lotto.html">🎰 로또 관리</a>
+                <a href="settings.html">⚙️ 설정</a>
+            </nav>
+        </aside>
+
+        <!-- 메인 콘텐츠 -->
+        <main class="admin-content">
+            <div class="admin-header">
+                <h1>🏪 가맹점 관리</h1>
+                <div style="display: flex; align-items: center; gap: 16px;">
+                    <button style="padding: 10px 20px; background: var(--primary); color: white; border: none; border-radius: 8px; cursor: pointer;">+ 가맹점 등록</button>
+                </div>
+            </div>
+
+            <!-- 상태별 탭 -->
+            <div style="display: flex; gap: 8px; margin-bottom: 20px;">
+                <div style="padding: 12px 24px; background: var(--primary); color: white; border-radius: 8px; font-weight: 500; cursor: pointer;">
+                    전체 <span style="background: rgba(255,255,255,0.3); padding: 2px 8px; border-radius: 12px; margin-left: 8px; font-size: 0.85rem;">486</span>
+                </div>
+                <div style="padding: 12px 24px; background: white; color: var(--gray-600); border-radius: 8px; cursor: pointer; box-shadow: var(--shadow);">
+                    승인 대기 <span style="background: var(--warning); color: white; padding: 2px 8px; border-radius: 12px; margin-left: 8px; font-size: 0.85rem;">12</span>
+                </div>
+                <div style="padding: 12px 24px; background: white; color: var(--gray-600); border-radius: 8px; cursor: pointer; box-shadow: var(--shadow);">
+                    운영 중 <span style="background: var(--gray-300); padding: 2px 8px; border-radius: 12px; margin-left: 8px; font-size: 0.85rem;">468</span>
+                </div>
+                <div style="padding: 12px 24px; background: white; color: var(--gray-600); border-radius: 8px; cursor: pointer; box-shadow: var(--shadow);">
+                    중지 <span style="background: var(--gray-300); padding: 2px 8px; border-radius: 12px; margin-left: 8px; font-size: 0.85rem;">6</span>
+                </div>
+            </div>
+
+            <!-- 가맹점 목록 -->
+            <div class="data-table-wrapper">
+                <div class="table-header">
+                    <div style="display: flex; gap: 12px;">
+                        <select style="padding: 10px 16px; border: 1px solid var(--gray-300); border-radius: 8px; font-size: 0.9rem;">
+                            <option>전체 지역</option>
+                            <option>울릉도</option>
+                            <option>제주도</option>
+                            <option>강화도</option>
+                        </select>
+                        <select style="padding: 10px 16px; border: 1px solid var(--gray-300); border-radius: 8px; font-size: 0.9rem;">
+                            <option>전체 카테고리</option>
+                            <option>음식점</option>
+                            <option>카페</option>
+                            <option>쇼핑</option>
+                        </select>
+                    </div>
+                    <div class="search-box">
+                        <input type="text" placeholder="상호명, 주소 검색...">
+                        <button>🔍 검색</button>
+                    </div>
+                </div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>상호명</th>
+                            <th>지역</th>
+                            <th>카테고리</th>
+                            <th>혜택</th>
+                            <th>방문자</th>
+                            <th>상태</th>
+                            <th>관리</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: #FFF8E1;">
+                            <td>#487</td>
+                            <td>🏠 바다뷰 펜션</td>
+                            <td>울릉도</td>
+                            <td>숙박</td>
+                            <td>조식 무료</td>
+                            <td>-</td>
+                            <td><span class="status-badge pending">승인 대기</span></td>
+                            <td>
+                                <button style="padding: 6px 12px; background: var(--success); color: white; border: none; border-radius: 4px; margin-right: 4px; cursor: pointer;">승인</button>
+                                <button style="padding: 6px 12px; background: var(--danger); color: white; border: none; border-radius: 4px; cursor: pointer;">거부</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#486</td>
+                            <td>🍜 황금룡 짜장</td>
+                            <td>울릉도</td>
+                            <td>음식점</td>
+                            <td>탕수육 무료</td>
+                            <td>1,247</td>
+                            <td><span class="status-badge active">운영 중</span></td>
+                            <td><a href="#" style="color: var(--primary);">상세</a></td>
+                        </tr>
+                        <tr>
+                            <td>#485</td>
+                            <td>☕ 바다뷰 카페</td>
+                            <td>울릉도</td>
+                            <td>카페</td>
+                            <td>20% 할인</td>
+                            <td>892</td>
+                            <td><span class="status-badge active">운영 중</span></td>
+                            <td><a href="#" style="color: var(--primary);">상세</a></td>
+                        </tr>
+                        <tr>
+                            <td>#484</td>
+                            <td>🍣 섬마을 횟집</td>
+                            <td>울릉도</td>
+                            <td>음식점</td>
+                            <td>새우튀김 서비스</td>
+                            <td>654</td>
+                            <td><span class="status-badge active">운영 중</span></td>
+                            <td><a href="#" style="color: var(--primary);">상세</a></td>
+                        </tr>
+                        <tr>
+                            <td>#483</td>
+                            <td>🛒 울릉도 특산물</td>
+                            <td>울릉도</td>
+                            <td>쇼핑</td>
+                            <td>10% 할인</td>
+                            <td>432</td>
+                            <td><span class="status-badge active">운영 중</span></td>
+                            <td><a href="#" style="color: var(--primary);">상세</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 가맹점 등록 폼 미리보기 -->
+            <div style="margin-top: 32px;">
+                <h3 style="margin-bottom: 16px; color: var(--gray-700);">📝 가맹점 등록/승인 화면</h3>
+                <div style="background: white; border-radius: 16px; box-shadow: var(--shadow-lg); max-width: 800px; overflow: hidden;">
+                    <div style="padding: 24px; border-bottom: 1px solid var(--gray-200);">
+                        <h3 style="font-size: 1.2rem;">가맹점 등록</h3>
+                    </div>
+                    <div style="padding: 24px;">
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+                            <!-- 기본 정보 -->
+                            <div>
+                                <label style="display: block; font-size: 0.85rem; color: var(--gray-600); margin-bottom: 8px;">상호명 *</label>
+                                <input type="text" placeholder="매장 이름 입력" style="width: 100%; padding: 12px 16px; border: 1px solid var(--gray-300); border-radius: 8px; font-size: 0.95rem;">
+                            </div>
+                            <div>
+                                <label style="display: block; font-size: 0.85rem; color: var(--gray-600); margin-bottom: 8px;">사업자번호 *</label>
+                                <input type="text" placeholder="000-00-00000" style="width: 100%; padding: 12px 16px; border: 1px solid var(--gray-300); border-radius: 8px; font-size: 0.95rem;">
+                            </div>
+                            <div>
+                                <label style="display: block; font-size: 0.85rem; color: var(--gray-600); margin-bottom: 8px;">대표자명 *</label>
+                                <input type="text" placeholder="대표자 이름" style="width: 100%; padding: 12px 16px; border: 1px solid var(--gray-300); border-radius: 8px; font-size: 0.95rem;">
+                            </div>
+                            <div>
+                                <label style="display: block; font-size: 0.85rem; color: var(--gray-600); margin-bottom: 8px;">전화번호 *</label>
+                                <input type="text" placeholder="054-000-0000" style="width: 100%; padding: 12px 16px; border: 1px solid var(--gray-300); border-radius: 8px; font-size: 0.95rem;">
+                            </div>
+                            <div style="grid-column: span 2;">
+                                <label style="display: block; font-size: 0.85rem; color: var(--gray-600); margin-bottom: 8px;">주소 *</label>
+                                <div style="display: flex; gap: 8px;">
+                                    <input type="text" placeholder="주소 검색" style="flex: 1; padding: 12px 16px; border: 1px solid var(--gray-300); border-radius: 8px; font-size: 0.95rem;">
+                                    <button style="padding: 12px 20px; background: var(--gray-200); border: none; border-radius: 8px; cursor: pointer;">🔍 검색</button>
+                                </div>
+                            </div>
+                            <div>
+                                <label style="display: block; font-size: 0.85rem; color: var(--gray-600); margin-bottom: 8px;">카테고리 *</label>
+                                <select style="width: 100%; padding: 12px 16px; border: 1px solid var(--gray-300); border-radius: 8px; font-size: 0.95rem;">
+                                    <option>카테고리 선택</option>
+                                    <option>음식점</option>
+                                    <option>카페</option>
+                                    <option>쇼핑</option>
+                                    <option>숙박</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- 혜택 설정 -->
+                        <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--gray-200);">
+                            <h4 style="font-size: 1rem; margin-bottom: 16px;">🎁 혜택 설정</h4>
+                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+                                <div>
+                                    <label style="display: block; font-size: 0.85rem; color: var(--gray-600); margin-bottom: 8px;">혜택 종류 *</label>
+                                    <select style="width: 100%; padding: 12px 16px; border: 1px solid var(--gray-300); border-radius: 8px; font-size: 0.95rem;">
+                                        <option>혜택 종류 선택</option>
+                                        <option>할인</option>
+                                        <option>무료 제공</option>
+                                        <option>조건부 무료</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label style="display: block; font-size: 0.85rem; color: var(--gray-600); margin-bottom: 8px;">혜택 상세 *</label>
+                                    <input type="text" placeholder="예: 탕수육 무료 제공" style="width: 100%; padding: 12px 16px; border: 1px solid var(--gray-300); border-radius: 8px; font-size: 0.95rem;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="padding: 16px 24px; background: var(--gray-50); display: flex; justify-content: flex-end; gap: 12px;">
+                        <button style="padding: 12px 24px; border: 1px solid var(--gray-300); background: white; border-radius: 8px; cursor: pointer;">취소</button>
+                        <button style="padding: 12px 24px; border: none; background: var(--primary); color: white; border-radius: 8px; cursor: pointer;">등록하기</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div style="position: fixed; bottom: 20px; right: 20px;">
+        <a href="../index.html" style="background: var(--primary); color: white; padding: 12px 24px; border-radius: 30px; text-decoration: none; box-shadow: 0 4px 12px rgba(255,107,53,0.4);">← 전체 목록</a>
+    </div>
+</body>
+</html>
+

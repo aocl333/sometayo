@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>여행권 QR - 썸타요</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="page-container">
+        <div class="page-title">
+            <h1>📱 여행권 (QR/바코드) 화면</h1>
+            <p>가맹점에서 혜택 인증 시 보여주는 화면</p>
+        </div>
+
+        <div class="device-grid">
+            <!-- 기본 QR 화면 -->
+            <div class="phone-frame">
+                <div class="phone-content" style="background: linear-gradient(180deg, #F8F9FA 0%, #FFFFFF 100%);">
+                    <header class="app-header" style="border: none; background: transparent;">
+                        <div class="logo">🏝️ 썸타요</div>
+                        <span style="color: var(--gray-500);">✕</span>
+                    </header>
+
+                    <div class="qr-screen">
+                        <h2 class="qr-title">사장님께 보여주세요</h2>
+                        <p class="qr-subtitle">바코드를 스캔하면 혜택이 적용됩니다</p>
+
+                        <div class="qr-code-box">
+                            <div class="qr-pattern"></div>
+                        </div>
+
+                        <div class="qr-code-number">1234 5678 9012</div>
+
+                        <div class="timer-box">
+                            <span class="label">유효시간</span>
+                            <span class="time">02:47</span>
+                        </div>
+
+                        <div class="ticket-info">
+                            <div class="label">현재 사용 중</div>
+                            <div class="value">🎫 현대 홈쇼핑 로또 패키지 (3일권)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 하단 탭 바 -->
+                <nav class="bottom-tab">
+                    <div class="tab-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                        <span>홈</span>
+                    </div>
+                    <div class="tab-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z"/></svg>
+                        <span>내주변</span>
+                    </div>
+                    <div class="tab-item active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                        <span>여행권</span>
+                    </div>
+                    <div class="tab-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                        <span>로또</span>
+                    </div>
+                    <div class="tab-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        <span>마이</span>
+                    </div>
+                </nav>
+            </div>
+
+            <!-- 스캔 성공 + 로또 번호 획득 팝업 -->
+            <div class="phone-frame">
+                <div class="phone-content" style="display: flex; align-items: center; justify-content: center;">
+                    <div style="background: white; border-radius: 20px; padding: 32px 24px; margin: 20px; text-align: center; width: calc(100% - 40px);">
+                        <!-- 폭죽 이모지 -->
+                        <div style="font-size: 4rem; margin-bottom: 16px;">🎉</div>
+                        
+                        <h3 style="font-size: 1.4rem; font-weight: 700; margin-bottom: 8px; color: var(--gray-800);">방문 인증 성공!</h3>
+                        
+                        <p style="color: var(--gray-600); margin-bottom: 24px;">약속된 혜택을 받으세요</p>
+
+                        <!-- 혜택 안내 -->
+                        <div style="background: #FFF3E0; padding: 16px; border-radius: 12px; margin-bottom: 24px;">
+                            <div style="font-size: 0.85rem; color: var(--gray-500);">제공 혜택</div>
+                            <div style="font-size: 1.1rem; font-weight: 700; color: var(--primary);">🍖 탕수육 무료</div>
+                        </div>
+
+                        <!-- 로또 번호 획득 -->
+                        <div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); padding: 24px; border-radius: 16px; margin-bottom: 24px;">
+                            <div style="font-size: 0.9rem; color: rgba(255,255,255,0.7); margin-bottom: 12px;">행운의 번호를 획득했어요!</div>
+                            <div style="width: 64px; height: 64px; background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 1.8rem; font-weight: 700; color: #1a1a2e; box-shadow: 0 4px 20px rgba(255,215,0,0.4);">27</div>
+                            
+                            <!-- 진행 상태 -->
+                            <div style="display: flex; gap: 8px; justify-content: center; margin-bottom: 8px;">
+                                <div style="width: 32px; height: 32px; background: #FFD700; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 600;">12</div>
+                                <div style="width: 32px; height: 32px; background: #FFD700; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 600;">27</div>
+                                <div style="width: 32px; height: 32px; background: #FFD700; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 600;">35</div>
+                                <div style="width: 32px; height: 32px; background: #FFD700; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 600;">27</div>
+                                <div style="width: 32px; height: 32px; border: 2px dashed rgba(255,255,255,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: rgba(255,255,255,0.3);">?</div>
+                                <div style="width: 32px; height: 32px; border: 2px dashed rgba(255,255,255,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: rgba(255,255,255,0.3);">?</div>
+                            </div>
+                            <div style="color: #FFD700; font-size: 0.85rem;">4/6 완료! 2개만 더!</div>
+                        </div>
+
+                        <button style="width: 100%; padding: 16px; background: var(--primary); color: white; border: none; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer;">확인</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="../index.html" style="color: white; text-decoration: none; opacity: 0.8;">← 전체 화면 목록으로</a>
+        </div>
+    </div>
+</body>
+</html>
+

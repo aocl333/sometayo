@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인/회원가입 - 썸타요</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="page-container">
+        <div class="page-title">
+            <h1>🔐 로그인/회원가입</h1>
+            <p>휴대폰 번호 및 소셜 로그인</p>
+        </div>
+
+        <div class="device-grid">
+            <!-- 로그인 화면 -->
+            <div class="phone-frame">
+                <div class="phone-content" style="background: linear-gradient(180deg, #FF6B35 0%, #FF8C5A 100%); position: relative; padding-bottom: 0;">
+                    
+                    <!-- 로그인 폼 영역 (정중앙) -->
+                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: calc(100% - 32px); background: white; border-radius: 24px; padding: 32px 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.15);">
+                        
+                        <!-- 로고 -->
+                        <div style="text-align: center; margin-bottom: 24px;">
+                            <div style="font-size: 3rem; margin-bottom: 8px;">🏝️</div>
+                            <h1 style="font-size: 1.5rem; font-weight: 700; color: var(--primary);">썸타요</h1>
+                            <p style="font-size: 0.85rem; color: var(--gray-500);">여행의 설렘, 혜택의 즐거움</p>
+                        </div>
+
+                        <!-- 휴대폰 번호 입력 -->
+                        <div style="margin-bottom: 16px;">
+                            <label style="display: block; font-size: 0.85rem; color: var(--gray-600); margin-bottom: 8px;">휴대폰 번호</label>
+                            <input type="tel" placeholder="010-0000-0000" style="width: 100%; padding: 16px; border: 1px solid var(--gray-300); border-radius: 12px; font-size: 1rem; box-sizing: border-box;">
+                        </div>
+
+                        <button style="width: 100%; padding: 16px; background: var(--primary); color: white; border: none; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer; margin-bottom: 20px;">
+                            인증번호 받기
+                        </button>
+
+                        <!-- 구분선 -->
+                        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
+                            <div style="flex: 1; height: 1px; background: var(--gray-200);"></div>
+                            <span style="color: var(--gray-400); font-size: 0.85rem;">또는</span>
+                            <div style="flex: 1; height: 1px; background: var(--gray-200);"></div>
+                        </div>
+
+                        <!-- 소셜 로그인 -->
+                        <div style="display: flex; gap: 12px;">
+                            <button style="flex: 1; padding: 14px; background: #FEE500; border: none; border-radius: 12px; font-size: 0.9rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                💬 카카오
+                            </button>
+                            <button style="flex: 1; padding: 14px; background: #03C75A; color: white; border: none; border-radius: 12px; font-size: 0.9rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                N 네이버
+                            </button>
+                        </div>
+
+                        <p style="text-align: center; margin-top: 16px; font-size: 0.75rem; color: var(--gray-500);">
+                            로그인 시 <span style="color: var(--primary);">이용약관</span> 및 <span style="color: var(--primary);">개인정보처리방침</span>에 동의합니다
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 휴대폰 인증 화면 -->
+            <div class="phone-frame">
+                <div class="phone-content" style="background: white;">
+                    <header class="app-header">
+                        <span style="font-size: 1.2rem; cursor: pointer;">←</span>
+                        <div style="font-weight: 600;">휴대폰 인증</div>
+                        <span style="width: 24px;"></span>
+                    </header>
+
+                    <div style="padding: 32px 24px;">
+                        <h2 style="font-size: 1.4rem; font-weight: 600; margin-bottom: 8px;">인증번호를 입력해주세요</h2>
+                        <p style="color: var(--gray-500); font-size: 0.9rem; margin-bottom: 32px;">010-1234-5678로 전송된 인증번호 6자리를 입력하세요</p>
+
+                        <!-- 인증번호 입력 -->
+                        <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+                            <input type="text" maxlength="1" style="flex: 1; height: 56px; text-align: center; font-size: 1.5rem; font-weight: 700; border: 2px solid var(--gray-300); border-radius: 12px;" value="3">
+                        </div>
+
+                        <!-- 타이머 -->
+                        <div style="text-align: center; margin-bottom: 24px;">
+                            <span style="color: var(--primary); font-size: 1.1rem; font-weight: 600;">02:47</span>
+                        </div>
+
+                        <!-- 재전송 버튼 -->
+                        <button style="width: 100%; padding: 14px; background: var(--gray-100); color: var(--gray-600); border: none; border-radius: 12px; font-size: 0.95rem; cursor: pointer; margin-bottom: 24px;">
+                            인증번호 재전송
+                        </button>
+
+                        <button style="width: 100%; padding: 16px; background: var(--gray-300); color: var(--gray-500); border: none; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: not-allowed;">
+                            확인
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="../index.html" style="color: white; text-decoration: none; opacity: 0.8;">← 전체 화면 목록으로</a>
+        </div>
+    </div>
+</body>
+</html>
+

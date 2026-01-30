@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>티켓 등록 - 썸타요</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="page-container">
+        <div class="page-title">
+            <h1>🎫 티켓 등록</h1>
+            <p>홈쇼핑 구매 코드 입력</p>
+        </div>
+
+        <div class="device-grid">
+            <!-- 티켓 등록 화면 -->
+            <div class="phone-frame">
+                <div class="phone-content" style="background: var(--gray-100);">
+                    <header class="app-header" style="background: white;">
+                        <span style="font-size: 1.2rem; cursor: pointer;">←</span>
+                        <div style="font-weight: 600;">티켓 등록</div>
+                        <span style="width: 24px;"></span>
+                    </header>
+
+                    <div style="padding: 24px 20px;">
+                        <!-- 안내 카드 -->
+                        <div style="background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%); border-radius: 16px; padding: 20px; margin-bottom: 24px;">
+                            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                                <span style="font-size: 2rem;">🎫</span>
+                                <div>
+                                    <div style="font-size: 1rem; font-weight: 600;">여행권 코드 등록</div>
+                                    <div style="font-size: 0.85rem; color: var(--gray-600);">홈쇼핑에서 구매한 코드를 입력하세요</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 코드 입력 영역 -->
+                        <div style="background: white; border-radius: 16px; padding: 24px; margin-bottom: 16px;">
+                            <label style="display: block; font-size: 0.9rem; font-weight: 600; margin-bottom: 12px;">쿠폰 코드</label>
+                            <input type="text" placeholder="XXXX-XXXX-XXXX-XXXX" style="width: 100%; padding: 16px; border: 2px solid var(--gray-200); border-radius: 12px; font-size: 1.1rem; font-family: monospace; letter-spacing: 2px; text-align: center;" value="HDHS-2026-ABCD">
+                            <p style="font-size: 0.8rem; color: var(--gray-500); margin-top: 8px; text-align: center;">영문+숫자 16자리를 입력하세요</p>
+                        </div>
+
+                        <button style="width: 100%; padding: 16px; background: var(--primary); color: white; border: none; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer;">
+                            등록하기
+                        </button>
+
+                        <!-- 도움말 -->
+                        <div style="background: white; border-radius: 16px; padding: 20px; margin-top: 24px;">
+                            <h4 style="font-size: 0.9rem; font-weight: 600; margin-bottom: 12px;">📌 코드 확인 방법</h4>
+                            <ul style="font-size: 0.85rem; color: var(--gray-600); margin-left: 16px; line-height: 1.8;">
+                                <li>홈쇼핑 구매 완료 후 문자로 전송됩니다</li>
+                                <li>홈쇼핑 앱 &gt; 마이페이지 &gt; 쿠폰함에서 확인</li>
+                                <li>코드 분실 시 고객센터로 문의하세요</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 등록 완료 화면 -->
+            <div class="phone-frame">
+                <div class="phone-content" style="background: white; display: flex; flex-direction: column;">
+                    <header class="app-header">
+                        <span style="font-size: 1.2rem; cursor: pointer;">←</span>
+                        <div style="font-weight: 600;">티켓 등록</div>
+                        <span style="width: 24px;"></span>
+                    </header>
+
+                    <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 24px;">
+                        <!-- 성공 아이콘 -->
+                        <div style="width: 100px; height: 100px; background: #E8F5E9; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 24px;">
+                            <span style="font-size: 3rem;">✓</span>
+                        </div>
+
+                        <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 8px;">등록 완료!</h2>
+                        <p style="color: var(--gray-500); text-align: center; margin-bottom: 32px;">여행권이 성공적으로 등록되었습니다</p>
+
+                        <!-- 등록된 티켓 정보 -->
+                        <div style="width: 100%; background: linear-gradient(135deg, #FFF8E1 0%, #FFECB3 100%); border-radius: 16px; padding: 24px; position: relative; overflow: hidden;">
+                            <div style="position: absolute; left: -10px; top: 50%; width: 20px; height: 20px; background: white; border-radius: 50%; transform: translateY(-50%);"></div>
+                            <div style="position: absolute; right: -10px; top: 50%; width: 20px; height: 20px; background: white; border-radius: 50%; transform: translateY(-50%);"></div>
+                            
+                            <div style="text-align: center;">
+                                <div style="font-size: 0.85rem; color: var(--gray-500); margin-bottom: 4px;">현대 홈쇼핑</div>
+                                <div style="font-size: 1.3rem; font-weight: 700; margin-bottom: 8px;">로또 패키지 (3일권)</div>
+                                <div style="display: flex; justify-content: center; gap: 16px; font-size: 0.85rem; color: var(--gray-600);">
+                                    <span>시작: 2026.01.30</span>
+                                    <span>만료: 2026.02.02</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button style="width: 100%; padding: 16px; background: var(--primary); color: white; border: none; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer; margin-top: 32px;">
+                            홈으로 가기
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="../index.html" style="color: white; text-decoration: none; opacity: 0.8;">← 전체 화면 목록으로</a>
+        </div>
+    </div>
+</body>
+</html>
+

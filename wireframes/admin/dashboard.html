@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 대시보드 - 썸타요</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body style="background: var(--gray-100);">
+    <div class="admin-layout">
+        <!-- 사이드바 -->
+        <aside class="admin-sidebar">
+            <div class="admin-logo">🏝️ 썸타요 Admin</div>
+            <nav class="admin-nav">
+                <a href="dashboard.html" class="active">📊 대시보드</a>
+                <a href="members.html">👥 회원 관리</a>
+                <a href="stores.html">🏪 가맹점 관리</a>
+                <a href="tickets.html">🎫 티켓 관리</a>
+                <a href="lotto.html">🎰 로또 관리</a>
+                <a href="settings.html">⚙️ 설정</a>
+            </nav>
+        </aside>
+
+        <!-- 메인 콘텐츠 -->
+        <main class="admin-content">
+            <div class="admin-header">
+                <h1>📊 대시보드</h1>
+                <div style="display: flex; align-items: center; gap: 16px;">
+                    <span style="color: var(--gray-600);">2026년 1월 30일</span>
+                    <div style="width: 40px; height: 40px; background: var(--gray-300); border-radius: 50%; display: flex; align-items: center; justify-content: center;">👤</div>
+                </div>
+            </div>
+
+            <!-- KPI 카드들 -->
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="label">총 회원 수</div>
+                    <div class="value">12,847</div>
+                    <div class="change up">↑ +234 (이번 주)</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="label">총 가맹점 수</div>
+                    <div class="value">486</div>
+                    <div class="change up">↑ +12 (이번 주)</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="label">금일 티켓 사용량</div>
+                    <div class="value">1,842</div>
+                    <div class="change up">↑ +15% (어제 대비)</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="label">로또 복권 발행</div>
+                    <div class="value">3,291</div>
+                    <div class="change">이번 회차</div>
+                </div>
+            </div>
+
+            <!-- 차트 영역 -->
+            <div class="chart-grid">
+                <div class="chart-card">
+                    <h3>📈 일별 가입자/방문자 추이</h3>
+                    <div class="chart-placeholder" style="display: flex; align-items: flex-end; padding: 20px; gap: 16px;">
+                        <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                            <div style="width: 100%; display: flex; gap: 4px; align-items: flex-end; height: 160px;">
+                                <div style="flex: 1; background: var(--primary); opacity: 0.3; border-radius: 4px; height: 60%;"></div>
+                                <div style="flex: 1; background: var(--secondary); opacity: 0.3; border-radius: 4px; height: 50%;"></div>
+                            </div>
+                            <span style="font-size: 0.75rem;">월</span>
+                        </div>
+                        <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                            <div style="width: 100%; display: flex; gap: 4px; align-items: flex-end; height: 160px;">
+                                <div style="flex: 1; background: var(--primary); opacity: 0.4; border-radius: 4px; height: 70%;"></div>
+                                <div style="flex: 1; background: var(--secondary); opacity: 0.4; border-radius: 4px; height: 60%;"></div>
+                            </div>
+                            <span style="font-size: 0.75rem;">화</span>
+                        </div>
+                        <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                            <div style="width: 100%; display: flex; gap: 4px; align-items: flex-end; height: 160px;">
+                                <div style="flex: 1; background: var(--primary); opacity: 0.5; border-radius: 4px; height: 65%;"></div>
+                                <div style="flex: 1; background: var(--secondary); opacity: 0.5; border-radius: 4px; height: 55%;"></div>
+                            </div>
+                            <span style="font-size: 0.75rem;">수</span>
+                        </div>
+                        <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                            <div style="width: 100%; display: flex; gap: 4px; align-items: flex-end; height: 160px;">
+                                <div style="flex: 1; background: var(--primary); opacity: 0.7; border-radius: 4px; height: 85%;"></div>
+                                <div style="flex: 1; background: var(--secondary); opacity: 0.7; border-radius: 4px; height: 75%;"></div>
+                            </div>
+                            <span style="font-size: 0.75rem;">목</span>
+                        </div>
+                        <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                            <div style="width: 100%; display: flex; gap: 4px; align-items: flex-end; height: 160px;">
+                                <div style="flex: 1; background: var(--primary); border-radius: 4px; height: 100%;"></div>
+                                <div style="flex: 1; background: var(--secondary); border-radius: 4px; height: 90%;"></div>
+                            </div>
+                            <span style="font-size: 0.75rem;">금</span>
+                        </div>
+                        <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                            <div style="width: 100%; display: flex; gap: 4px; align-items: flex-end; height: 160px;">
+                                <div style="flex: 1; background: var(--primary); opacity: 0.9; border-radius: 4px; height: 95%;"></div>
+                                <div style="flex: 1; background: var(--secondary); opacity: 0.9; border-radius: 4px; height: 88%;"></div>
+                            </div>
+                            <span style="font-size: 0.75rem;">토</span>
+                        </div>
+                        <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                            <div style="width: 100%; display: flex; gap: 4px; align-items: flex-end; height: 160px;">
+                                <div style="flex: 1; background: var(--primary); opacity: 0.8; border-radius: 4px; height: 80%;"></div>
+                                <div style="flex: 1; background: var(--secondary); opacity: 0.8; border-radius: 4px; height: 72%;"></div>
+                            </div>
+                            <span style="font-size: 0.75rem;">일</span>
+                        </div>
+                    </div>
+                    <div style="display: flex; justify-content: center; gap: 24px; padding: 12px;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <div style="width: 12px; height: 12px; background: var(--primary); border-radius: 2px;"></div>
+                            <span style="font-size: 0.8rem; color: var(--gray-600);">신규 가입</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <div style="width: 12px; height: 12px; background: var(--secondary); border-radius: 2px;"></div>
+                            <span style="font-size: 0.8rem; color: var(--gray-600);">방문자</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <h3>🗺️ 지역별 가맹점 분포</h3>
+                    <div class="chart-placeholder" style="padding: 20px;">
+                        <div style="display: flex; flex-direction: column; gap: 12px;">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <span style="width: 80px; font-size: 0.85rem;">울릉도</span>
+                                <div style="flex: 1; height: 24px; background: var(--gray-200); border-radius: 4px; overflow: hidden;">
+                                    <div style="width: 85%; height: 100%; background: var(--primary);"></div>
+                                </div>
+                                <span style="font-size: 0.85rem; color: var(--gray-600);">245</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <span style="width: 80px; font-size: 0.85rem;">제주도</span>
+                                <div style="flex: 1; height: 24px; background: var(--gray-200); border-radius: 4px; overflow: hidden;">
+                                    <div style="width: 65%; height: 100%; background: var(--primary);"></div>
+                                </div>
+                                <span style="font-size: 0.85rem; color: var(--gray-600);">156</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <span style="width: 80px; font-size: 0.85rem;">강화도</span>
+                                <div style="flex: 1; height: 24px; background: var(--gray-200); border-radius: 4px; overflow: hidden;">
+                                    <div style="width: 35%; height: 100%; background: var(--primary);"></div>
+                                </div>
+                                <span style="font-size: 0.85rem; color: var(--gray-600);">52</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <span style="width: 80px; font-size: 0.85rem;">거제도</span>
+                                <div style="flex: 1; height: 24px; background: var(--gray-200); border-radius: 4px; overflow: hidden;">
+                                    <div style="width: 25%; height: 100%; background: var(--primary);"></div>
+                                </div>
+                                <span style="font-size: 0.85rem; color: var(--gray-600);">33</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 최근 활동 -->
+            <div class="data-table-wrapper" style="margin-top: 24px;">
+                <div class="table-header">
+                    <h3>🕐 최근 활동</h3>
+                    <a href="#" style="color: var(--primary); text-decoration: none; font-size: 0.9rem;">전체보기 →</a>
+                </div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>시간</th>
+                            <th>활동</th>
+                            <th>상세</th>
+                            <th>상태</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>14:32</td>
+                            <td>신규 회원가입</td>
+                            <td>김*수 (010-****-5678)</td>
+                            <td><span class="status-badge active">완료</span></td>
+                        </tr>
+                        <tr>
+                            <td>14:28</td>
+                            <td>티켓 사용</td>
+                            <td>황금룡 짜장 - 이*희</td>
+                            <td><span class="status-badge active">완료</span></td>
+                        </tr>
+                        <tr>
+                            <td>14:15</td>
+                            <td>가맹점 신청</td>
+                            <td>바다뷰 펜션 (울릉도)</td>
+                            <td><span class="status-badge pending">승인 대기</span></td>
+                        </tr>
+                        <tr>
+                            <td>14:02</td>
+                            <td>로또 복권 발행</td>
+                            <td>박*철 - 제 102회차</td>
+                            <td><span class="status-badge active">완료</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <div style="position: fixed; bottom: 20px; right: 20px;">
+        <a href="../index.html" style="background: var(--primary); color: white; padding: 12px 24px; border-radius: 30px; text-decoration: none; box-shadow: 0 4px 12px rgba(255,107,53,0.4);">← 전체 목록</a>
+    </div>
+</body>
+</html>
+

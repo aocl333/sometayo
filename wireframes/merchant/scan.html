@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스캔 대기 - 가맹점주 모드</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="page-container">
+        <div class="page-title">
+            <h1>🏪 가맹점주 스캔 화면</h1>
+            <p>여행객 바코드 스캔 및 결과 확인</p>
+        </div>
+
+        <div class="device-grid">
+            <!-- 스캔 대기 화면 -->
+            <div class="phone-frame">
+                <div class="phone-content" style="padding: 0;">
+                    <div class="merchant-scan">
+                        <!-- 헤더 -->
+                        <div class="scan-header">
+                            <span>≡</span>
+                            <h3>황금룡 짜장</h3>
+                            <span>👤</span>
+                        </div>
+
+                        <!-- 카메라 뷰 -->
+                        <div class="camera-view">
+                            <div class="scan-frame"></div>
+                            <div class="scan-guide">여행객의 바코드를 사각형 안에 맞춰주세요</div>
+                            <button class="manual-input-btn">⌨️ 코드 직접 입력</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 스캔 성공 결과 -->
+            <div class="phone-frame">
+                <div class="phone-content" style="padding: 0;">
+                    <div class="merchant-scan">
+                        <div class="scan-header">
+                            <span>≡</span>
+                            <h3>황금룡 짜장</h3>
+                            <span>👤</span>
+                        </div>
+                        <div class="camera-view">
+                            <div class="scan-frame" style="border-color: var(--success);"></div>
+                        </div>
+                        
+                        <!-- 성공 결과 시트 -->
+                        <div class="scan-result-sheet">
+                            <div class="result-success">
+                                <div class="result-icon success">✓</div>
+                                <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 8px;">인증 성공!</h3>
+                                <p class="customer-name">김*오 님</p>
+                                
+                                <div class="benefit-to-provide">
+                                    <div class="label">제공해야 할 혜택</div>
+                                    <div class="value">🍖 [무료] 탕수육 (소)</div>
+                                </div>
+
+                                <button class="btn btn-primary" style="width: 100%;">✓ 확인 완료</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 스캔 실패 결과 -->
+            <div class="phone-frame">
+                <div class="phone-content" style="padding: 0;">
+                    <div class="merchant-scan">
+                        <div class="scan-header">
+                            <span>≡</span>
+                            <h3>황금룡 짜장</h3>
+                            <span>👤</span>
+                        </div>
+                        <div class="camera-view">
+                            <div class="scan-frame" style="border-color: var(--danger);"></div>
+                        </div>
+                        
+                        <!-- 실패 결과 시트 -->
+                        <div class="scan-result-sheet">
+                            <div class="result-success">
+                                <div class="result-icon error">✕</div>
+                                <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 8px; color: var(--danger);">인증 실패</h3>
+                                
+                                <div style="background: #FFEBEE; padding: 16px; border-radius: 12px; margin-bottom: 20px;">
+                                    <div style="font-size: 0.9rem; color: var(--danger); font-weight: 500;">⚠️ 이미 사용된 티켓입니다</div>
+                                </div>
+
+                                <button class="btn btn-outline" style="width: 100%;">다시 스캔하기</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="../index.html" style="color: white; text-decoration: none; opacity: 0.8;">← 전체 화면 목록으로</a>
+        </div>
+    </div>
+</body>
+</html>
+

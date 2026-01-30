@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>가맹점 정보 - 가맹점주 모드</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="page-container">
+        <div class="page-title">
+            <h1>🏪 가맹점 정보 & 통계</h1>
+            <p>내 매장 정보 및 방문 통계 확인</p>
+        </div>
+
+        <div class="device-grid">
+            <!-- 가맹점 정보 화면 -->
+            <div class="phone-frame">
+                <div class="phone-content" style="background: var(--gray-100);">
+                    <header class="app-header" style="background: white;">
+                        <span>≡</span>
+                        <div style="font-weight: 600;">내 가맹점 정보</div>
+                        <span>✏️</span>
+                    </header>
+
+                    <!-- 매장 정보 카드 -->
+                    <div style="background: white; margin: 16px; border-radius: 16px; padding: 24px; text-align: center;">
+                        <div style="width: 80px; height: 80px; background: var(--gray-200); border-radius: 16px; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem;">🍜</div>
+                        <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 4px;">황금룡 짜장</h3>
+                        <p style="font-size: 0.85rem; color: var(--gray-500);">중식당</p>
+                    </div>
+
+                    <!-- 오늘의 방문객 -->
+                    <div style="background: linear-gradient(135deg, var(--primary) 0%, #FF8C5A 100%); margin: 0 16px 16px; border-radius: 16px; padding: 20px; color: white;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <div style="font-size: 0.85rem; opacity: 0.9;">오늘의 방문객</div>
+                                <div style="font-size: 2.5rem; font-weight: 700;">24<span style="font-size: 1rem; font-weight: 400;">명</span></div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-size: 0.8rem; opacity: 0.8;">어제 대비</div>
+                                <div style="font-size: 1.1rem; font-weight: 600;">↑ +5명</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 현재 제공 혜택 -->
+                    <div style="background: white; margin: 0 16px 16px; border-radius: 16px; padding: 20px;">
+                        <h4 style="font-size: 0.9rem; color: var(--gray-500); margin-bottom: 12px;">현재 제공 중인 혜택</h4>
+                        <div style="background: #FFF3E0; padding: 16px; border-radius: 12px; border-left: 4px solid var(--primary);">
+                            <div style="font-size: 0.8rem; color: var(--primary); font-weight: 600; margin-bottom: 4px;">[조건부 무료]</div>
+                            <div style="font-size: 1rem; font-weight: 500;">짜장면 2그릇 주문 시, 군만두 or 미니 탕수육 무료</div>
+                        </div>
+                    </div>
+
+                    <!-- 매장 상세 정보 -->
+                    <div style="background: white; margin: 0 16px; border-radius: 16px; overflow: hidden;">
+                        <div style="display: flex; align-items: center; padding: 16px 20px; border-bottom: 1px solid var(--gray-200);">
+                            <span style="font-size: 1.2rem; margin-right: 12px;">📍</span>
+                            <div>
+                                <div style="font-size: 0.75rem; color: var(--gray-500);">주소</div>
+                                <div style="font-size: 0.9rem;">울릉군 울릉읍 도동길 123</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; padding: 16px 20px; border-bottom: 1px solid var(--gray-200);">
+                            <span style="font-size: 1.2rem; margin-right: 12px;">📞</span>
+                            <div>
+                                <div style="font-size: 0.75rem; color: var(--gray-500);">전화번호</div>
+                                <div style="font-size: 0.9rem;">054-791-1234</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; padding: 16px 20px;">
+                            <span style="font-size: 1.2rem; margin-right: 12px;">🕐</span>
+                            <div>
+                                <div style="font-size: 0.75rem; color: var(--gray-500);">영업시간</div>
+                                <div style="font-size: 0.9rem;">11:00 - 21:00</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 통계 대시보드 -->
+            <div class="phone-frame">
+                <div class="phone-content" style="background: var(--gray-100);">
+                    <header class="app-header" style="background: white;">
+                        <span>≡</span>
+                        <div style="font-weight: 600;">통계 대시보드</div>
+                        <span></span>
+                    </header>
+
+                    <!-- 기간 선택 탭 -->
+                    <div style="display: flex; gap: 8px; padding: 16px; background: white; border-bottom: 1px solid var(--gray-200);">
+                        <div style="padding: 8px 16px; background: var(--primary); color: white; border-radius: 20px; font-size: 0.85rem;">일간</div>
+                        <div style="padding: 8px 16px; background: var(--gray-100); color: var(--gray-600); border-radius: 20px; font-size: 0.85rem;">주간</div>
+                        <div style="padding: 8px 16px; background: var(--gray-100); color: var(--gray-600); border-radius: 20px; font-size: 0.85rem;">월간</div>
+                    </div>
+
+                    <!-- 주요 지표 -->
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 16px;">
+                        <div style="background: white; border-radius: 12px; padding: 16px; text-align: center;">
+                            <div style="font-size: 0.8rem; color: var(--gray-500); margin-bottom: 4px;">방문자 수</div>
+                            <div style="font-size: 1.8rem; font-weight: 700; color: var(--primary);">24</div>
+                        </div>
+                        <div style="background: white; border-radius: 12px; padding: 16px; text-align: center;">
+                            <div style="font-size: 0.8rem; color: var(--gray-500); margin-bottom: 4px;">티켓 사용</div>
+                            <div style="font-size: 1.8rem; font-weight: 700; color: var(--secondary);">21</div>
+                        </div>
+                    </div>
+
+                    <!-- 방문 차트 -->
+                    <div style="background: white; margin: 0 16px 16px; border-radius: 16px; padding: 20px;">
+                        <h4 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 16px;">시간대별 방문 현황</h4>
+                        <div style="display: flex; align-items: flex-end; gap: 8px; height: 120px;">
+                            <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+                                <div style="width: 100%; background: var(--gray-200); border-radius: 4px; height: 20%;"></div>
+                                <span style="font-size: 0.7rem; color: var(--gray-500); margin-top: 4px;">9</span>
+                            </div>
+                            <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+                                <div style="width: 100%; background: var(--gray-200); border-radius: 4px; height: 30%;"></div>
+                                <span style="font-size: 0.7rem; color: var(--gray-500); margin-top: 4px;">10</span>
+                            </div>
+                            <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+                                <div style="width: 100%; background: var(--primary); border-radius: 4px; height: 80%;"></div>
+                                <span style="font-size: 0.7rem; color: var(--gray-500); margin-top: 4px;">11</span>
+                            </div>
+                            <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+                                <div style="width: 100%; background: var(--primary); border-radius: 4px; height: 100%;"></div>
+                                <span style="font-size: 0.7rem; color: var(--gray-500); margin-top: 4px;">12</span>
+                            </div>
+                            <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+                                <div style="width: 100%; background: var(--primary); border-radius: 4px; height: 70%;"></div>
+                                <span style="font-size: 0.7rem; color: var(--gray-500); margin-top: 4px;">13</span>
+                            </div>
+                            <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+                                <div style="width: 100%; background: var(--gray-200); border-radius: 4px; height: 40%;"></div>
+                                <span style="font-size: 0.7rem; color: var(--gray-500); margin-top: 4px;">14</span>
+                            </div>
+                            <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+                                <div style="width: 100%; background: var(--gray-200); border-radius: 4px; height: 35%;"></div>
+                                <span style="font-size: 0.7rem; color: var(--gray-500); margin-top: 4px;">15</span>
+                            </div>
+                        </div>
+                        <div style="text-align: center; margin-top: 12px; font-size: 0.8rem; color: var(--gray-500);">
+                            🔥 피크 시간: 12:00 ~ 13:00
+                        </div>
+                    </div>
+
+                    <!-- 주간 통계 요약 -->
+                    <div style="background: white; margin: 0 16px; border-radius: 16px; padding: 20px;">
+                        <h4 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 16px;">이번 주 요약</h4>
+                        <div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--gray-200);">
+                            <span style="color: var(--gray-600);">총 방문자</span>
+                            <span style="font-weight: 600;">142명</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--gray-200);">
+                            <span style="color: var(--gray-600);">티켓 사용</span>
+                            <span style="font-weight: 600;">128건</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 12px 0;">
+                            <span style="color: var(--gray-600);">혜택 제공</span>
+                            <span style="font-weight: 600;">128건</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="../index.html" style="color: white; text-decoration: none; opacity: 0.8;">← 전체 화면 목록으로</a>
+        </div>
+    </div>
+</body>
+</html>
+

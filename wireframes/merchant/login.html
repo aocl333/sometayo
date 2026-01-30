@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>점주 로그인 - 썸타요</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="page-container">
+        <div class="page-title">
+            <h1>🏪 점주 로그인</h1>
+            <p>가맹점주 전용 로그인</p>
+        </div>
+
+        <div class="device-grid">
+            <div class="phone-frame">
+                <div class="phone-content" style="background: linear-gradient(180deg, #343A40 0%, #495057 100%); position: relative; padding-bottom: 0;">
+                    
+                    <!-- 로그인 폼 영역 (정중앙) -->
+                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: calc(100% - 32px); background: white; border-radius: 24px; padding: 32px 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.25);">
+                        
+                        <!-- 로고 -->
+                        <div style="text-align: center; margin-bottom: 24px;">
+                            <div style="font-size: 2.5rem; margin-bottom: 8px;">🏪</div>
+                            <h1 style="font-size: 1.4rem; font-weight: 700; color: #343A40;">썸타요 파트너</h1>
+                            <p style="font-size: 0.85rem; color: var(--gray-500);">가맹점주 전용</p>
+                        </div>
+                        
+                        <!-- 사업자번호 입력 -->
+                        <div style="margin-bottom: 16px;">
+                            <label style="display: block; font-size: 0.85rem; color: var(--gray-600); margin-bottom: 8px;">사업자등록번호</label>
+                            <input type="text" placeholder="000-00-00000" style="width: 100%; padding: 16px; border: 1px solid var(--gray-300); border-radius: 12px; font-size: 1rem; box-sizing: border-box;">
+                        </div>
+
+                        <!-- 비밀번호 입력 -->
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; font-size: 0.85rem; color: var(--gray-600); margin-bottom: 8px;">비밀번호</label>
+                            <input type="password" placeholder="비밀번호 입력" style="width: 100%; padding: 16px; border: 1px solid var(--gray-300); border-radius: 12px; font-size: 1rem; box-sizing: border-box;">
+                        </div>
+
+                        <button style="width: 100%; padding: 16px; background: #343A40; color: white; border: none; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer; margin-bottom: 16px;">
+                            로그인
+                        </button>
+
+                        <div style="display: flex; justify-content: center; gap: 24px; font-size: 0.85rem; color: var(--gray-500);">
+                            <a href="#" style="color: var(--gray-500); text-decoration: none;">비밀번호 찾기</a>
+                            <span>|</span>
+                            <a href="#" style="color: var(--gray-500); text-decoration: none;">입점 문의</a>
+                        </div>
+
+                        <!-- 일반 사용자 전환 -->
+                        <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--gray-200); text-align: center;">
+                            <p style="font-size: 0.8rem; color: var(--gray-500); margin-bottom: 4px;">여행객이신가요?</p>
+                            <a href="../tourist/login.html" style="color: var(--primary); font-weight: 600; text-decoration: none; font-size: 0.9rem;">일반 로그인으로 전환 →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="../index.html" style="color: white; text-decoration: none; opacity: 0.8;">← 전체 화면 목록으로</a>
+        </div>
+    </div>
+</body>
+</html>
+
