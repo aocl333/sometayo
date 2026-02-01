@@ -3,106 +3,542 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>스캔 대기 - 가맹점주 모드</title>
-    <link rel="stylesheet" href="../styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>QR 스캔 - 썸타요 파트너</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #000;
+            min-height: 100vh;
+            color: #212121;
+        }
+        
+        .main-container {
+            max-width: 480px;
+            margin: 0 auto;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        /* 헤더 */
+        .top-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 16px;
+            z-index: 100;
+            color: white;
+        }
+        
+        .header-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            text-decoration: none;
+            color: white;
+        }
+        
+        .header-title {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        
+        /* 카메라 뷰 */
+        .camera-view {
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        /* 스캔 프레임 */
+        .scan-frame {
+            width: 260px;
+            height: 260px;
+            position: relative;
+        }
+        
+        .corner {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border: 4px solid #FF6B35;
+        }
+        
+        .corner.tl { top: 0; left: 0; border-right: none; border-bottom: none; border-radius: 8px 0 0 0; }
+        .corner.tr { top: 0; right: 0; border-left: none; border-bottom: none; border-radius: 0 8px 0 0; }
+        .corner.bl { bottom: 0; left: 0; border-right: none; border-top: none; border-radius: 0 0 0 8px; }
+        .corner.br { bottom: 0; right: 0; border-left: none; border-top: none; border-radius: 0 0 8px 0; }
+        
+        /* 스캔 라인 */
+        .scan-line {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #FF6B35, transparent);
+            animation: scanMove 2s ease-in-out infinite;
+        }
+        
+        @keyframes scanMove {
+            0%, 100% { top: 20px; }
+            50% { top: 220px; }
+        }
+        
+        .scan-guide {
+            color: white;
+            font-size: 0.9rem;
+            text-align: center;
+            margin-top: 32px;
+            opacity: 0.9;
+        }
+        
+        /* 오늘 통계 */
+        .today-stats {
+            position: absolute;
+            top: 80px;
+            left: 16px;
+            right: 16px;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-around;
+        }
+        
+        .stat-item {
+            text-align: center;
+            color: white;
+        }
+        
+        .stat-item .value {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+        
+        .stat-item .label {
+            font-size: 0.7rem;
+            opacity: 0.8;
+        }
+        
+        /* 하단 영역 */
+        .bottom-area {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 16px 16px 100px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.9));
+        }
+        
+        .manual-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 14px;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 12px;
+            color: white;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+        
+        .manual-btn:active {
+            background: rgba(255,255,255,0.25);
+        }
+        
+        /* 하단 네비게이션 */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 480px;
+            background: rgba(30,30,30,0.95);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0 24px;
+            z-index: 100;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: 4px 16px;
+            color: rgba(255,255,255,0.5);
+            text-decoration: none;
+            font-size: 0.65rem;
+        }
+        
+        .nav-item.active {
+            color: #FF6B35;
+        }
+        
+        .nav-item .icon {
+            font-size: 1.3rem;
+        }
+        
+        /* 모달 */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+        }
+        
+        .modal-card {
+            width: calc(100% - 48px);
+            max-width: 360px;
+            background: white;
+            border-radius: 20px;
+            padding: 28px 24px;
+            text-align: center;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            font-size: 1.5rem;
+            color: #9E9E9E;
+            cursor: pointer;
+        }
+        
+        /* 코드 입력 모달 */
+        .input-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .input-desc {
+            font-size: 0.85rem;
+            color: #757575;
+            margin-bottom: 20px;
+        }
+        
+        .code-input {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid #E0E0E0;
+            border-radius: 12px;
+            font-size: 1.3rem;
+            text-align: center;
+            letter-spacing: 6px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        .code-input:focus {
+            outline: none;
+            border-color: #FF6B35;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background: #FF6B35;
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: #F5F5F5;
+            color: #424242;
+            margin-top: 8px;
+        }
+        
+        /* 결과 모달 */
+        .result-icon {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 16px;
+        }
+        
+        .result-icon.success {
+            background: #E8F5E9;
+        }
+        
+        .result-icon.error {
+            background: #FFEBEE;
+        }
+        
+        .result-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        
+        .result-title.error {
+            color: #F44336;
+        }
+        
+        .result-customer {
+            font-size: 0.9rem;
+            color: #757575;
+            margin-bottom: 20px;
+        }
+        
+        .benefit-box {
+            background: #FFF8E1;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+        
+        .benefit-label {
+            font-size: 0.75rem;
+            color: #9E9E9E;
+            margin-bottom: 4px;
+        }
+        
+        .benefit-value {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #FF6B35;
+        }
+        
+        .reward-box {
+            background: #E3F2FD;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .reward-label {
+            font-size: 0.75rem;
+            color: #757575;
+            margin-bottom: 8px;
+        }
+        
+        .reward-items {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+        }
+        
+        .reward-item {
+            text-align: center;
+        }
+        
+        .reward-item .icon {
+            font-size: 1.5rem;
+            margin-bottom: 2px;
+        }
+        
+        .reward-item .text {
+            font-size: 0.75rem;
+            color: #1976D2;
+            font-weight: 600;
+        }
+        
+        .error-box {
+            background: #FFEBEE;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+            color: #D32F2F;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
 <body>
-    <div class="page-container">
-        <div class="page-title">
-            <h1>🏪 가맹점주 스캔 화면</h1>
-            <p>여행객 바코드 스캔 및 결과 확인</p>
-        </div>
-
-        <div class="device-grid">
-            <!-- 스캔 대기 화면 -->
-            <div class="phone-frame">
-                <div class="phone-content" style="padding: 0;">
-                    <div class="merchant-scan">
-                        <!-- 헤더 -->
-                        <div class="scan-header">
-                            <span>≡</span>
-                            <h3>황금룡 짜장</h3>
-                            <span>👤</span>
-                        </div>
-
-                        <!-- 카메라 뷰 -->
-                        <div class="camera-view">
-                            <div class="scan-frame"></div>
-                            <div class="scan-guide">여행객의 바코드를 사각형 안에 맞춰주세요</div>
-                            <button class="manual-input-btn">⌨️ 코드 직접 입력</button>
-                        </div>
-                    </div>
-                </div>
+    <div class="main-container">
+        <!-- 헤더 -->
+        <header class="top-header">
+            <a href="info.html" class="header-btn">☰</a>
+            <span class="header-title">🏪 황금룡 짜장</span>
+            <a href="settings.html" class="header-btn">⚙️</a>
+        </header>
+        
+        <!-- 오늘 통계 -->
+        <div class="today-stats">
+            <div class="stat-item">
+                <div class="value">24</div>
+                <div class="label">오늘 방문</div>
             </div>
-
-            <!-- 스캔 성공 결과 -->
-            <div class="phone-frame">
-                <div class="phone-content" style="padding: 0;">
-                    <div class="merchant-scan">
-                        <div class="scan-header">
-                            <span>≡</span>
-                            <h3>황금룡 짜장</h3>
-                            <span>👤</span>
-                        </div>
-                        <div class="camera-view">
-                            <div class="scan-frame" style="border-color: var(--success);"></div>
-                        </div>
-                        
-                        <!-- 성공 결과 시트 -->
-                        <div class="scan-result-sheet">
-                            <div class="result-success">
-                                <div class="result-icon success">✓</div>
-                                <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 8px;">인증 성공!</h3>
-                                <p class="customer-name">김*오 님</p>
-                                
-                                <div class="benefit-to-provide">
-                                    <div class="label">제공해야 할 혜택</div>
-                                    <div class="value">🍖 [무료] 탕수육 (소)</div>
-                                </div>
-
-                                <button class="btn btn-primary" style="width: 100%;">✓ 확인 완료</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="stat-item">
+                <div class="value">5</div>
+                <div class="label">이번 시간</div>
             </div>
-
-            <!-- 스캔 실패 결과 -->
-            <div class="phone-frame">
-                <div class="phone-content" style="padding: 0;">
-                    <div class="merchant-scan">
-                        <div class="scan-header">
-                            <span>≡</span>
-                            <h3>황금룡 짜장</h3>
-                            <span>👤</span>
-                        </div>
-                        <div class="camera-view">
-                            <div class="scan-frame" style="border-color: var(--danger);"></div>
-                        </div>
-                        
-                        <!-- 실패 결과 시트 -->
-                        <div class="scan-result-sheet">
-                            <div class="result-success">
-                                <div class="result-icon error">✕</div>
-                                <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 8px; color: var(--danger);">인증 실패</h3>
-                                
-                                <div style="background: #FFEBEE; padding: 16px; border-radius: 12px; margin-bottom: 20px;">
-                                    <div style="font-size: 0.9rem; color: var(--danger); font-weight: 500;">⚠️ 이미 사용된 티켓입니다</div>
-                                </div>
-
-                                <button class="btn btn-outline" style="width: 100%;">다시 스캔하기</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="stat-item">
+                <div class="value">+19%</div>
+                <div class="label">어제 대비</div>
             </div>
         </div>
-
-        <div style="text-align: center; margin-top: 40px;">
-            <a href="../index.html" style="color: white; text-decoration: none; opacity: 0.8;">← 전체 화면 목록으로</a>
+        
+        <!-- 카메라 뷰 -->
+        <div class="camera-view">
+            <div class="scan-frame">
+                <div class="corner tl"></div>
+                <div class="corner tr"></div>
+                <div class="corner bl"></div>
+                <div class="corner br"></div>
+                <div class="scan-line"></div>
+            </div>
+        </div>
+        
+        <!-- 하단 버튼 -->
+        <div class="bottom-area">
+            <button class="manual-btn" onclick="showInputModal()">
+                ⌨️ 코드 직접 입력
+            </button>
+        </div>
+        
+        <!-- 하단 네비게이션 -->
+        <nav class="bottom-nav">
+            <a href="scan.html" class="nav-item active">
+                <span class="icon">📷</span>
+                <span>스캔</span>
+            </a>
+            <a href="info.html" class="nav-item">
+                <span class="icon">🏪</span>
+                <span>내 가맹점</span>
+            </a>
+            <a href="settings.html" class="nav-item">
+                <span class="icon">⚙️</span>
+                <span>설정</span>
+            </a>
+        </nav>
+    </div>
+    
+    <!-- 코드 입력 모달 -->
+    <div class="modal-overlay" id="inputModal">
+        <div class="modal-card">
+            <div class="input-title">인증코드 입력</div>
+            <div class="input-desc">고객의 여행권 인증코드를 입력해주세요</div>
+            <input type="text" class="code-input" id="codeInput" placeholder="ABC123" maxlength="8" oninput="this.value = this.value.toUpperCase()">
+            <button class="btn btn-primary" onclick="verifyCode()">인증하기</button>
+            <button class="btn btn-secondary" onclick="closeInputModal()">취소</button>
         </div>
     </div>
+    
+    <!-- 성공 모달 -->
+    <div class="modal-overlay" id="successModal">
+        <div class="modal-card">
+            <div class="result-icon success">✓</div>
+            <div class="result-title">인증 완료!</div>
+            <div class="result-customer">김*오 님</div>
+            
+            <div class="benefit-box">
+                <div class="benefit-label">제공해야 할 혜택</div>
+                <div class="benefit-value">🍖 탕수육 (소) 무료</div>
+            </div>
+            
+            <div class="reward-box">
+                <div class="reward-label">고객에게 자동 지급됨</div>
+                <div class="reward-items">
+                    <div class="reward-item">
+                        <div class="icon">🎫</div>
+                        <div class="text">로또번호 +1</div>
+                    </div>
+                    <div class="reward-item">
+                        <div class="icon">🔨</div>
+                        <div class="text">망치 +1</div>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="btn btn-primary" onclick="closeSuccessModal()">확인</button>
+        </div>
+    </div>
+    
+    <!-- 실패 모달 -->
+    <div class="modal-overlay" id="errorModal">
+        <div class="modal-card">
+            <div class="result-icon error">✕</div>
+            <div class="result-title error">인증 실패</div>
+            
+            <div class="error-box">
+                ⚠️ 이미 사용된 티켓이거나 유효하지 않은 코드입니다
+            </div>
+            
+            <button class="btn btn-secondary" onclick="closeErrorModal()">다시 시도</button>
+        </div>
+    </div>
+    
+    <script>
+        function showInputModal() {
+            document.getElementById('inputModal').classList.add('active');
+            document.getElementById('codeInput').focus();
+        }
+        
+        function closeInputModal() {
+            document.getElementById('inputModal').classList.remove('active');
+            document.getElementById('codeInput').value = '';
+        }
+        
+        function verifyCode() {
+            const code = document.getElementById('codeInput').value.trim();
+            if (!code) {
+                alert('인증코드를 입력해주세요');
+                return;
+            }
+            closeInputModal();
+            
+            // 데모: 'ERROR' 입력시 실패, 그 외 성공
+            if (code === 'ERROR') {
+                document.getElementById('errorModal').classList.add('active');
+            } else {
+                document.getElementById('successModal').classList.add('active');
+            }
+        }
+        
+        function closeSuccessModal() {
+            document.getElementById('successModal').classList.remove('active');
+        }
+        
+        function closeErrorModal() {
+            document.getElementById('errorModal').classList.remove('active');
+        }
+    </script>
 </body>
 </html>
-

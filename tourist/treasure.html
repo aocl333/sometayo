@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>보물상자 - 썸타요</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: white;
+            min-height: 100vh;
+            color: #212121;
+        }
+        
+        .main-container {
+            max-width: 480px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+        
+        /* 헤더 */
+        .top-header {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            background: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .back-btn {
+            font-size: 1.2rem;
+            text-decoration: none;
+            color: #212121;
+            width: 32px;
+        }
+        
+        .header-title {
+            flex: 1;
+            text-align: center;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        
+        .header-right {
+            width: 32px;
+            text-align: right;
+            font-size: 1.1rem;
+        }
+        
+        /* 망치 현황 배너 */
+        .info-banner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: #FFF8E1;
+        }
+        
+        .hammer-info {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+        }
+        
+        .hammer-info strong {
+            color: #FF6B35;
+            font-size: 1.1rem;
+        }
+        
+        .hammer-help-link {
+            font-size: 0.75rem;
+            color: #9E9E9E;
+            text-decoration: underline;
+        }
+        
+        /* 등급 안내 섹션 */
+        .grade-section {
+            padding: 12px 16px;
+            background: #FAFAFA;
+            border-bottom: 1px solid #F0F0F0;
+        }
+        
+        .grade-row {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .grade-item {
+            flex: 1;
+            padding: 10px 8px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .grade-item.gold {
+            background: linear-gradient(135deg, #FFF8E1, #FFE082);
+        }
+        
+        .grade-item.silver {
+            background: linear-gradient(135deg, #FAFAFA, #E0E0E0);
+        }
+        
+        .grade-item.bronze {
+            background: linear-gradient(135deg, #FFF3E0, #FFCC80);
+        }
+        
+        .grade-badge {
+            display: block;
+            font-size: 0.65rem;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+        
+        .gold .grade-badge { color: #E65100; }
+        .silver .grade-badge { color: #616161; }
+        .bronze .grade-badge { color: #D84315; }
+        
+        .grade-prize {
+            display: block;
+            font-size: 0.7rem;
+            color: #424242;
+            margin-bottom: 4px;
+            line-height: 1.3;
+        }
+        
+        .grade-hammer {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #FF6B35;
+        }
+        
+        /* 구분선 */
+        .divider {
+            height: 8px;
+            background: #F5F5F5;
+        }
+        
+        /* 섹션 */
+        .section {
+            padding: 16px;
+        }
+        
+        .section-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #212121;
+            margin-bottom: 12px;
+        }
+        
+        /* 여행지 리스트 */
+        .spot-list {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* 여행지 아이템 */
+        .spot-item {
+            border-bottom: 1px solid #F5F5F5;
+        }
+        
+        .spot-item:last-child {
+            border-bottom: none;
+        }
+        
+        .spot-row {
+            display: flex;
+            align-items: center;
+            padding: 14px 0;
+            gap: 12px;
+            cursor: pointer;
+        }
+        
+        .spot-row:active {
+            opacity: 0.7;
+        }
+        
+        .spot-item.locked .spot-row {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        /* 상자 아이콘 */
+        .box-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+            position: relative;
+        }
+        
+        .box-icon.gold { background: linear-gradient(135deg, #FFE082, #FFA000); }
+        .box-icon.silver { background: linear-gradient(135deg, #E0E0E0, #9E9E9E); }
+        .box-icon.bronze { background: linear-gradient(135deg, #FFCC80, #FF7043); }
+        
+        .box-icon .lock {
+            position: absolute;
+            bottom: -2px;
+            right: -2px;
+            font-size: 0.7rem;
+        }
+        
+        /* 여행지 정보 */
+        .spot-info {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .spot-name {
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+        
+        .spot-meta {
+            font-size: 0.75rem;
+            color: #9E9E9E;
+        }
+        
+        /* 상태 & 히트 */
+        .spot-right {
+            text-align: right;
+        }
+        
+        .spot-status {
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .spot-status.ready { color: #4CAF50; }
+        .spot-status.locked { color: #9E9E9E; }
+        .spot-status.done { color: #FF6B35; }
+        
+        .spot-hits {
+            display: flex;
+            gap: 3px;
+            justify-content: flex-end;
+        }
+        
+        .hit-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #E0E0E0;
+        }
+        
+        .hit-dot.filled {
+            background: #FF6B35;
+        }
+        
+        /* 게임 영역 (인라인 확장) */
+        .game-area {
+            display: none;
+            padding: 20px 16px;
+            background: #FAFAFA;
+            border-radius: 12px;
+            margin: 0 0 12px 0;
+            text-align: center;
+        }
+        
+        .game-area.active {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 게임 스테이지 */
+        .game-stage {
+            position: relative;
+            height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+        
+        /* 망치 */
+        .hammer {
+            position: absolute;
+            top: 0;
+            right: 50px;
+            font-size: 2.5rem;
+            transform-origin: bottom right;
+        }
+        
+        .hammer.swing {
+            animation: hammerSwing 0.3s ease;
+        }
+        
+        @keyframes hammerSwing {
+            0% { transform: rotate(0deg); }
+            30% { transform: rotate(-45deg); }
+            60% { transform: rotate(5deg); }
+            100% { transform: rotate(0deg); }
+        }
+        
+        /* 상자 */
+        .game-box {
+            position: relative;
+            width: 100px;
+            height: 80px;
+        }
+        
+        .game-box-lid {
+            width: 108px;
+            height: 24px;
+            position: absolute;
+            top: 0;
+            left: -4px;
+            border-radius: 6px 6px 0 0;
+            transition: transform 0.4s ease;
+            transform-origin: left bottom;
+        }
+        
+        .game-box.gold .game-box-lid { background: linear-gradient(180deg, #FFE082, #FFD54F); }
+        .game-box.silver .game-box-lid { background: linear-gradient(180deg, #EEEEEE, #BDBDBD); }
+        .game-box.bronze .game-box-lid { background: linear-gradient(180deg, #FFCCBC, #FFAB91); }
+        
+        .game-box-body {
+            width: 100px;
+            height: 56px;
+            position: absolute;
+            bottom: 0;
+            border-radius: 6px;
+        }
+        
+        .game-box.gold .game-box-body { 
+            background: linear-gradient(180deg, #FFD54F, #FFA000); 
+            box-shadow: inset 0 -8px 0 #E65100;
+        }
+        .game-box.silver .game-box-body { 
+            background: linear-gradient(180deg, #E0E0E0, #9E9E9E); 
+            box-shadow: inset 0 -8px 0 #616161;
+        }
+        .game-box.bronze .game-box-body { 
+            background: linear-gradient(180deg, #FFAB91, #FF7043); 
+            box-shadow: inset 0 -8px 0 #D84315;
+        }
+        
+        .game-box-lock {
+            position: absolute;
+            bottom: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 20px;
+            background: #5D4037;
+            border-radius: 3px;
+            z-index: 5;
+            transition: opacity 0.3s;
+        }
+        
+        .game-box-lock::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 2px;
+            width: 12px;
+            height: 10px;
+            border: 3px solid #5D4037;
+            border-bottom: none;
+            border-radius: 7px 7px 0 0;
+        }
+        
+        .game-box.shake {
+            animation: boxShake 0.25s ease;
+        }
+        
+        @keyframes boxShake {
+            0%, 100% { transform: translateX(0) rotate(0); }
+            25% { transform: translateX(-4px) rotate(-3deg); }
+            75% { transform: translateX(4px) rotate(3deg); }
+        }
+        
+        /* 금간 효과 */
+        .game-box-crack {
+            position: absolute;
+            top: 24px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .game-box.damage-1 .game-box-crack {
+            opacity: 1;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 60'%3E%3Cpath d='M50 5 L53 20 L48 30 L52 45' stroke='%23333' stroke-width='2' fill='none'/%3E%3C/svg%3E") center/contain no-repeat;
+        }
+        
+        .game-box.damage-2 .game-box-crack {
+            opacity: 1;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 60'%3E%3Cpath d='M50 5 L53 20 L48 30 L52 45' stroke='%23333' stroke-width='2' fill='none'/%3E%3Cpath d='M25 10 L32 25 L28 40' stroke='%23333' stroke-width='2' fill='none'/%3E%3Cpath d='M75 8 L70 22 L76 35' stroke='%23333' stroke-width='2' fill='none'/%3E%3C/svg%3E") center/contain no-repeat;
+        }
+        
+        /* 데미지 상태 - 상자가 점점 부서지는 느낌 */
+        .game-box.damage-1 .game-box-body {
+            filter: brightness(0.92);
+        }
+        
+        .game-box.damage-1 .game-box-lid {
+            transform: rotate(-5deg);
+        }
+        
+        .game-box.damage-2 .game-box-body {
+            filter: brightness(0.85);
+        }
+        
+        .game-box.damage-2 .game-box-lid {
+            transform: rotate(-12deg);
+        }
+        
+        /* 파편 */
+        .game-debris {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 2px;
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .game-debris.fly {
+            animation: debrisFly 0.5s ease forwards;
+        }
+        
+        @keyframes debrisFly {
+            0% { opacity: 1; transform: translate(0, 0) rotate(0); }
+            100% { opacity: 0; transform: translate(var(--tx), var(--ty)) rotate(360deg); }
+        }
+        
+        .game-box.open .game-box-lid {
+            transform: rotate(-100deg);
+        }
+        
+        .game-box.open .game-box-lock {
+            opacity: 0;
+        }
+        
+        .game-box.open .game-box-body {
+            filter: brightness(0.8);
+        }
+        
+        /* 게임 히트 표시 */
+        .game-hits {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        
+        .game-hit-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #E0E0E0;
+            transition: all 0.3s;
+        }
+        
+        .game-hit-dot.active {
+            background: #FF6B35;
+            transform: scale(1.2);
+        }
+        
+        .game-text {
+            font-size: 0.85rem;
+            color: #757575;
+            margin-bottom: 12px;
+        }
+        
+        .game-btn {
+            padding: 12px 32px;
+            background: #FF6B35;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        .game-btn:active {
+            background: #E55A2B;
+        }
+        
+        .game-btn:disabled {
+            background: #BDBDBD;
+        }
+        
+        /* 결과 표시 */
+        .game-result {
+            display: none;
+            padding: 16px;
+        }
+        
+        .game-result.active {
+            display: block;
+        }
+        
+        .result-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .result-icon {
+            font-size: 2.5rem;
+        }
+        
+        .result-info {
+            flex: 1;
+        }
+        
+        .result-label {
+            font-size: 0.75rem;
+            color: #757575;
+        }
+        
+        .result-prize {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #FF6B35;
+        }
+        
+        .result-btn {
+            padding: 8px 16px;
+            background: white;
+            border: 1px solid #E0E0E0;
+            border-radius: 16px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+        
+        /* 획득 방법 */
+        .help-section {
+            padding: 16px;
+            background: #FAFAFA;
+        }
+        
+        .help-row {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .help-item {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            background: white;
+            border-radius: 8px;
+            font-size: 0.8rem;
+        }
+        
+        .help-item .reward {
+            color: #FF6B35;
+            font-weight: 600;
+            margin-left: auto;
+        }
+        
+        /* 하단 네비게이션 */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 480px;
+            background: white;
+            border-top: 1px solid #EEEEEE;
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0 20px;
+            z-index: 100;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: 4px 8px;
+            color: #BDBDBD;
+            text-decoration: none;
+            font-size: 0.6rem;
+        }
+        
+        .nav-item.active {
+            color: #212121;
+        }
+        
+        .nav-item svg {
+            width: 22px;
+            height: 22px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- 헤더 -->
+        <header class="top-header">
+            <a href="home.html" class="back-btn">←</a>
+            <span class="header-title">보물상자</span>
+            <span class="header-right">❓</span>
+        </header>
+        
+        <!-- 망치 현황 -->
+        <div class="info-banner">
+            <div class="hammer-info">
+                🔨 보유 <strong id="hammerCount">5</strong>개
+            </div>
+            <a href="#helpSection" class="hammer-help-link">획득방법</a>
+        </div>
+        
+        <!-- 등급 안내 -->
+        <div class="grade-section">
+            <div class="grade-row">
+                <div class="grade-item gold">
+                    <span class="grade-badge">GOLD</span>
+                    <span class="grade-prize">에어팟, 아이패드</span>
+                    <span class="grade-hammer">🔨×3</span>
+                </div>
+                <div class="grade-item silver">
+                    <span class="grade-badge">SILVER</span>
+                    <span class="grade-prize">기프티콘 5만원</span>
+                    <span class="grade-hammer">🔨×2</span>
+                </div>
+                <div class="grade-item bronze">
+                    <span class="grade-badge">BRONZE</span>
+                    <span class="grade-prize">커피, 로또+1</span>
+                    <span class="grade-hammer">🔨×1</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 여행지 보물상자 -->
+        <div class="section">
+            <div class="section-title">📍 숨은 여행지 보물상자</div>
+            
+            <div class="spot-list">
+                <!-- 비자림 숲길 -->
+                <div class="spot-item" id="spot0">
+                    <div class="spot-row" onclick="toggleGame(0)">
+                        <div class="box-icon gold">🎁</div>
+                        <div class="spot-info">
+                            <div class="spot-name">비자림 숲길</div>
+                            <div class="spot-meta">제주시 구좌읍 · 50m</div>
+                        </div>
+                        <div class="spot-right">
+                            <div class="spot-status ready">오픈 가능</div>
+                            <div class="spot-hits">
+                                <span class="hit-dot" id="s0d0"></span>
+                                <span class="hit-dot" id="s0d1"></span>
+                                <span class="hit-dot" id="s0d2"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="game-area" id="game0">
+                        <div class="game-stage">
+                            <div class="hammer" id="hammer0">🔨</div>
+                            <div class="game-box gold" id="box0">
+                                <div class="game-box-lid"></div>
+                                <div class="game-box-body">
+                                    <div class="game-box-lock"></div>
+                                </div>
+                                <div class="game-box-crack"></div>
+                            </div>
+                        </div>
+                        <div class="game-hits" id="hits0">
+                            <span class="game-hit-dot"></span>
+                            <span class="game-hit-dot"></span>
+                            <span class="game-hit-dot"></span>
+                        </div>
+                        <div class="game-text" id="text0">3번 두드리면 오픈!</div>
+                        <button class="game-btn" id="btn0" onclick="hitBox(0)">🔨 두드리기</button>
+                        <div class="game-result" id="result0">
+                            <div class="result-content">
+                                <span class="result-icon" id="prize0icon">🎧</span>
+                                <div class="result-info">
+                                    <div class="result-label">당첨!</div>
+                                    <div class="result-prize" id="prize0name">에어팟 프로</div>
+                                </div>
+                                <button class="result-btn" onclick="closeGame(0)">확인</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 오름왓 마을 -->
+                <div class="spot-item" id="spot1">
+                    <div class="spot-row" onclick="toggleGame(1)">
+                        <div class="box-icon silver">🎁</div>
+                        <div class="spot-info">
+                            <div class="spot-name">오름왓 마을</div>
+                            <div class="spot-meta">서귀포시 표선면 · 30m</div>
+                        </div>
+                        <div class="spot-right">
+                            <div class="spot-status ready">오픈 가능</div>
+                            <div class="spot-hits">
+                                <span class="hit-dot" id="s1d0"></span>
+                                <span class="hit-dot" id="s1d1"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="game-area" id="game1">
+                        <div class="game-stage">
+                            <div class="hammer" id="hammer1">🔨</div>
+                            <div class="game-box silver" id="box1">
+                                <div class="game-box-lid"></div>
+                                <div class="game-box-body">
+                                    <div class="game-box-lock"></div>
+                                </div>
+                                <div class="game-box-crack"></div>
+                            </div>
+                        </div>
+                        <div class="game-hits" id="hits1">
+                            <span class="game-hit-dot"></span>
+                            <span class="game-hit-dot"></span>
+                        </div>
+                        <div class="game-text" id="text1">2번 두드리면 오픈!</div>
+                        <button class="game-btn" id="btn1" onclick="hitBox(1)">🔨 두드리기</button>
+                        <div class="game-result" id="result1">
+                            <div class="result-content">
+                                <span class="result-icon" id="prize1icon">☕</span>
+                                <div class="result-info">
+                                    <div class="result-label">당첨!</div>
+                                    <div class="result-prize" id="prize1name">스타벅스</div>
+                                </div>
+                                <button class="result-btn" onclick="closeGame(1)">확인</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 월정리 해변 -->
+                <div class="spot-item" id="spot2">
+                    <div class="spot-row" onclick="toggleGame(2)">
+                        <div class="box-icon bronze">🎁</div>
+                        <div class="spot-info">
+                            <div class="spot-name">월정리 해변</div>
+                            <div class="spot-meta">제주시 구좌읍 · 20m</div>
+                        </div>
+                        <div class="spot-right">
+                            <div class="spot-status ready">오픈 가능</div>
+                            <div class="spot-hits">
+                                <span class="hit-dot" id="s2d0"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="game-area" id="game2">
+                        <div class="game-stage">
+                            <div class="hammer" id="hammer2">🔨</div>
+                            <div class="game-box bronze" id="box2">
+                                <div class="game-box-lid"></div>
+                                <div class="game-box-body">
+                                    <div class="game-box-lock"></div>
+                                </div>
+                                <div class="game-box-crack"></div>
+                            </div>
+                        </div>
+                        <div class="game-hits" id="hits2">
+                            <span class="game-hit-dot"></span>
+                        </div>
+                        <div class="game-text" id="text2">1번 두드리면 오픈!</div>
+                        <button class="game-btn" id="btn2" onclick="hitBox(2)">🔨 두드리기</button>
+                        <div class="game-result" id="result2">
+                            <div class="result-content">
+                                <span class="result-icon" id="prize2icon">🧋</span>
+                                <div class="result-info">
+                                    <div class="result-label">당첨!</div>
+                                    <div class="result-prize" id="prize2name">아메리카노</div>
+                                </div>
+                                <button class="result-btn" onclick="closeGame(2)">확인</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 잠긴 것들 -->
+                <div class="spot-item locked">
+                    <div class="spot-row">
+                        <div class="box-icon bronze">🎁<span class="lock">🔒</span></div>
+                        <div class="spot-info">
+                            <div class="spot-name">감귤밭 체험장</div>
+                            <div class="spot-meta">서귀포시 남원읍 · 3.2km</div>
+                        </div>
+                        <div class="spot-right">
+                            <div class="spot-status locked">100m 이내 필요</div>
+                            <div class="spot-hits">
+                                <span class="hit-dot"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="spot-item locked">
+                    <div class="spot-row">
+                        <div class="box-icon silver">🎁<span class="lock">🔒</span></div>
+                        <div class="spot-info">
+                            <div class="spot-name">한라산 영실코스</div>
+                            <div class="spot-meta">서귀포시 · 15km</div>
+                        </div>
+                        <div class="spot-right">
+                            <div class="spot-status locked">100m 이내 필요</div>
+                            <div class="spot-hits">
+                                <span class="hit-dot"></span>
+                                <span class="hit-dot"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="spot-item locked">
+                    <div class="spot-row">
+                        <div class="box-icon gold">🎁<span class="lock">🔒</span></div>
+                        <div class="spot-info">
+                            <div class="spot-name">성산일출봉</div>
+                            <div class="spot-meta">서귀포시 성산읍 · 25km</div>
+                        </div>
+                        <div class="spot-right">
+                            <div class="spot-status locked">100m 이내 필요</div>
+                            <div class="spot-hits">
+                                <span class="hit-dot"></span>
+                                <span class="hit-dot"></span>
+                                <span class="hit-dot"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 획득 방법 -->
+        <div class="help-section" id="helpSection">
+            <div class="section-title">🔨 망치 획득</div>
+            <div class="help-row">
+                <div class="help-item">
+                    <span>📱 QR 인증</span>
+                    <span class="reward">+1</span>
+                </div>
+                <div class="help-item">
+                    <span>✍️ 리뷰 작성</span>
+                    <span class="reward">+1</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 하단 네비게이션 -->
+        <nav class="bottom-nav">
+            <a href="home.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                    <polyline points="9 22 9 12 15 12 15 22"/>
+                </svg>
+                <span>홈</span>
+            </a>
+            <a href="map.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="10" r="3"/>
+                    <path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z"/>
+                </svg>
+                <span>내주변</span>
+            </a>
+            <a href="treasure.html" class="nav-item active">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="8" width="18" height="12" rx="2"/>
+                    <path d="M7 8V6a5 5 0 0 1 10 0v2"/>
+                </svg>
+                <span>보물상자</span>
+            </a>
+            <a href="lotto.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M12 6v6l4 2"/>
+                </svg>
+                <span>로또</span>
+            </a>
+            <a href="mypage.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                </svg>
+                <span>MY</span>
+            </a>
+        </nav>
+    </div>
+    
+    <script>
+        let hammerCount = 5;
+        let isAnimating = false;
+        
+        const spots = [
+            { grade: 'gold', required: 3, hits: 0, opened: false },
+            { grade: 'silver', required: 2, hits: 0, opened: false },
+            { grade: 'bronze', required: 1, hits: 0, opened: false }
+        ];
+        
+        const prizes = {
+            gold: [{ icon: '🎧', name: '에어팟 프로' }, { icon: '💻', name: '아이패드' }, { icon: '⌚', name: '애플워치' }],
+            silver: [{ icon: '☕', name: '스타벅스 5만원' }, { icon: '🍕', name: '피자 기프티콘' }],
+            bronze: [{ icon: '🧋', name: '아메리카노' }, { icon: '🎫', name: '로또번호 +1' }]
+        };
+        
+        function toggleGame(idx) {
+            if (spots[idx].opened) return;
+            
+            const game = document.getElementById('game' + idx);
+            const isActive = game.classList.contains('active');
+            
+            // 다른 게임 닫기
+            document.querySelectorAll('.game-area').forEach((g, i) => {
+                if (i !== idx) g.classList.remove('active');
+            });
+            
+            if (!isActive) {
+                game.classList.add('active');
+            } else {
+                game.classList.remove('active');
+            }
+        }
+        
+        const gradeColors = {
+            gold: '#FFD54F',
+            silver: '#BDBDBD', 
+            bronze: '#FFAB91'
+        };
+        
+        function createDebris(box, grade) {
+            const color = gradeColors[grade];
+            for (let i = 0; i < 6; i++) {
+                const debris = document.createElement('div');
+                debris.className = 'game-debris';
+                debris.style.cssText = `
+                    background: ${color};
+                    top: ${20 + Math.random() * 30}px;
+                    left: ${20 + Math.random() * 60}px;
+                    --tx: ${(Math.random() - 0.5) * 80}px;
+                    --ty: ${-20 - Math.random() * 40}px;
+                `;
+                box.appendChild(debris);
+                setTimeout(() => debris.classList.add('fly'), 10);
+                setTimeout(() => debris.remove(), 600);
+            }
+        }
+        
+        function hitBox(idx) {
+            if (isAnimating || spots[idx].opened) return;
+            if (hammerCount <= 0) {
+                alert('망치가 부족합니다!');
+                return;
+            }
+            
+            isAnimating = true;
+            hammerCount--;
+            document.getElementById('hammerCount').textContent = hammerCount;
+            
+            const hammer = document.getElementById('hammer' + idx);
+            const box = document.getElementById('box' + idx);
+            
+            hammer.classList.add('swing');
+            
+            setTimeout(() => {
+                box.classList.add('shake');
+                createDebris(box, spots[idx].grade);
+            }, 100);
+            
+            setTimeout(() => {
+                hammer.classList.remove('swing');
+                box.classList.remove('shake');
+                
+                spots[idx].hits++;
+                
+                // 히트 표시 업데이트
+                const dots = document.querySelectorAll('#hits' + idx + ' .game-hit-dot');
+                if (dots[spots[idx].hits - 1]) dots[spots[idx].hits - 1].classList.add('active');
+                
+                // 리스트 히트 표시 업데이트
+                const spotDot = document.getElementById('s' + idx + 'd' + (spots[idx].hits - 1));
+                if (spotDot) spotDot.classList.add('filled');
+                
+                // 데미지 표시 (금 가는 효과)
+                box.classList.remove('damage-1', 'damage-2');
+                if (spots[idx].hits < spots[idx].required) {
+                    box.classList.add('damage-' + spots[idx].hits);
+                    document.getElementById('text' + idx).textContent = `${spots[idx].required - spots[idx].hits}번 더!`;
+                    isAnimating = false;
+                } else {
+                    // 오픈!
+                    spots[idx].opened = true;
+                    box.classList.add('open');
+                    
+                    // 최종 파편 더 많이
+                    for (let i = 0; i < 3; i++) {
+                        setTimeout(() => createDebris(box, spots[idx].grade), i * 50);
+                    }
+                    
+                    document.getElementById('text' + idx).textContent = '🎉 오픈!';
+                    document.getElementById('btn' + idx).style.display = 'none';
+                    
+                    setTimeout(() => showResult(idx), 500);
+                }
+            }, 300);
+        }
+        
+        function showResult(idx) {
+            const prizeList = prizes[spots[idx].grade];
+            const prize = prizeList[Math.floor(Math.random() * prizeList.length)];
+            
+            document.getElementById('prize' + idx + 'icon').textContent = prize.icon;
+            document.getElementById('prize' + idx + 'name').textContent = prize.name;
+            document.getElementById('result' + idx).classList.add('active');
+            
+            // 리스트 상태 업데이트
+            const spot = document.getElementById('spot' + idx);
+            const status = spot.querySelector('.spot-status');
+            status.className = 'spot-status done';
+            status.textContent = '오픈 완료';
+            
+            isAnimating = false;
+        }
+        
+        function closeGame(idx) {
+            document.getElementById('game' + idx).classList.remove('active');
+        }
+    </script>
+</body>
+</html>

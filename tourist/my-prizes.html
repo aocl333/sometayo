@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>내 경품 - 썸타요</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: #FAFAFA;
+            min-height: 100vh;
+        }
+        
+        .main-container {
+            max-width: 480px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            padding-bottom: 100px;
+        }
+        
+        .top-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            background: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #E5E5E5;
+        }
+        
+        .back-btn {
+            color: #333;
+            text-decoration: none;
+            font-size: 1.5rem;
+        }
+        
+        .page-title-header {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+        
+        .header-placeholder {
+            width: 24px;
+        }
+        
+        /* 요약 카드 */
+        .summary-section {
+            padding: 16px;
+        }
+        
+        .summary-card {
+            background: linear-gradient(135deg, #FF6B35 0%, #FF8C5A 100%);
+            border-radius: 16px;
+            padding: 20px;
+            color: white;
+        }
+        
+        .summary-title {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 16px;
+        }
+        
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            text-align: center;
+        }
+        
+        .summary-item {
+            background: rgba(255,255,255,0.2);
+            border-radius: 12px;
+            padding: 12px 8px;
+        }
+        
+        .summary-item .count {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .summary-item .label {
+            font-size: 0.7rem;
+            opacity: 0.9;
+            margin-top: 4px;
+        }
+        
+        /* 탭 필터 */
+        .filter-tabs {
+            display: flex;
+            padding: 0 16px;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        
+        .filter-tab {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            background: #F5F5F5;
+            color: #666;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .filter-tab.active {
+            background: #FF6B35;
+            color: white;
+        }
+        
+        /* 경품 리스트 */
+        .prize-list {
+            padding: 0 16px;
+        }
+        
+        .prize-card {
+            background: white;
+            border: 1px solid #EEEEEE;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 12px;
+            display: flex;
+            gap: 14px;
+            align-items: center;
+        }
+        
+        .prize-icon {
+            width: 56px;
+            height: 56px;
+            background: #F5F5F5;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            flex-shrink: 0;
+        }
+        
+        .prize-info {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .prize-info h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #333;
+        }
+        
+        .prize-date {
+            font-size: 0.75rem;
+            color: #999;
+            margin-bottom: 4px;
+        }
+        
+        .prize-from {
+            font-size: 0.75rem;
+            color: #666;
+        }
+        
+        .prize-grade {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        
+        .prize-grade.gold {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #333;
+        }
+        
+        .prize-grade.silver {
+            background: linear-gradient(135deg, #C0C0C0, #A0A0A0);
+            color: #333;
+        }
+        
+        .prize-grade.bronze {
+            background: linear-gradient(135deg, #CD7F32, #B87333);
+            color: white;
+        }
+        
+        /* 빈 상태 */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+        
+        .empty-state .icon {
+            font-size: 4rem;
+            margin-bottom: 16px;
+        }
+        
+        .empty-state p {
+            font-size: 0.95rem;
+        }
+        
+        /* 하단 네비게이션 */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 480px;
+            background: white;
+            border-top: 1px solid #E5E5E5;
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0 20px;
+            z-index: 100;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 8px 12px;
+            color: #BDBDBD;
+            text-decoration: none;
+            font-size: 0.7rem;
+        }
+        
+        .nav-item.active {
+            color: #FF6B35;
+        }
+        
+        .nav-item svg {
+            width: 24px;
+            height: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <header class="top-header">
+            <a href="mypage.html" class="back-btn">←</a>
+            <span class="page-title-header">내 경품</span>
+            <div class="header-placeholder"></div>
+        </header>
+        
+        <!-- 요약 카드 -->
+        <div class="summary-section">
+            <div class="summary-card">
+                <div class="summary-title">🎁 보물상자 당첨 현황</div>
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <div class="count">8</div>
+                        <div class="label">총 당첨</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="count">2</div>
+                        <div class="label">🥇 금</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="count">3</div>
+                        <div class="label">🥈 은</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="count">3</div>
+                        <div class="label">🥉 동</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 필터 탭 -->
+        <div class="filter-tabs">
+            <button class="filter-tab active">전체</button>
+            <button class="filter-tab">🥇 금</button>
+            <button class="filter-tab">🥈 은</button>
+            <button class="filter-tab">🥉 동</button>
+        </div>
+        
+        <!-- 경품 리스트 -->
+        <div class="prize-list">
+            <div class="prize-card">
+                <div class="prize-icon">🎧</div>
+                <div class="prize-info">
+                    <h4>에어팟 프로 2세대</h4>
+                    <div class="prize-date">2026.01.28 당첨</div>
+                    <div class="prize-from">📍 비밀의 해변 보물상자</div>
+                </div>
+                <span class="prize-grade gold">🥇 금</span>
+            </div>
+            
+            <div class="prize-card">
+                <div class="prize-icon">💻</div>
+                <div class="prize-info">
+                    <h4>맥북 에어 M3</h4>
+                    <div class="prize-date">2026.01.26 당첨</div>
+                    <div class="prize-from">📍 오름 정상 보물상자</div>
+                </div>
+                <span class="prize-grade gold">🥇 금</span>
+            </div>
+            
+            <div class="prize-card">
+                <div class="prize-icon">💳</div>
+                <div class="prize-info">
+                    <h4>신세계 상품권 5만원</h4>
+                    <div class="prize-date">2026.01.25 당첨</div>
+                    <div class="prize-from">📍 숲속 카페 보물상자</div>
+                </div>
+                <span class="prize-grade silver">🥈 은</span>
+            </div>
+            
+            <div class="prize-card">
+                <div class="prize-icon">🍕</div>
+                <div class="prize-info">
+                    <h4>피자 기프티콘</h4>
+                    <div class="prize-date">2026.01.24 당첨</div>
+                    <div class="prize-from">📍 해안도로 보물상자</div>
+                </div>
+                <span class="prize-grade silver">🥈 은</span>
+            </div>
+            
+            <div class="prize-card">
+                <div class="prize-icon">☕</div>
+                <div class="prize-info">
+                    <h4>스타벅스 아메리카노</h4>
+                    <div class="prize-date">2026.01.23 당첨</div>
+                    <div class="prize-from">📍 오름 뷰포인트 보물상자</div>
+                </div>
+                <span class="prize-grade bronze">🥉 동</span>
+            </div>
+            
+            <div class="prize-card">
+                <div class="prize-icon">🎫</div>
+                <div class="prize-info">
+                    <h4>로또번호 2개</h4>
+                    <div class="prize-date">2026.01.20 당첨</div>
+                    <div class="prize-from">📍 해안 절경 보물상자</div>
+                </div>
+                <span class="prize-grade bronze">🥉 동</span>
+            </div>
+            
+            <div class="prize-card">
+                <div class="prize-icon">☕</div>
+                <div class="prize-info">
+                    <h4>스타벅스 세트</h4>
+                    <div class="prize-date">2026.01.18 당첨</div>
+                    <div class="prize-from">📍 마을 카페 보물상자</div>
+                </div>
+                <span class="prize-grade silver">🥈 은</span>
+            </div>
+            
+            <div class="prize-card">
+                <div class="prize-icon">🍦</div>
+                <div class="prize-info">
+                    <h4>아이스크림 쿠폰</h4>
+                    <div class="prize-date">2026.01.15 당첨</div>
+                    <div class="prize-from">📍 동굴 입구 보물상자</div>
+                </div>
+                <span class="prize-grade bronze">🥉 동</span>
+            </div>
+        </div>
+        
+        <!-- 하단 네비게이션 -->
+        <nav class="bottom-nav">
+            <a href="home.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                    <polyline points="9 22 9 12 15 12 15 22"/>
+                </svg>
+                <span>홈</span>
+            </a>
+            <a href="map.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="10" r="3"/>
+                    <path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z"/>
+                </svg>
+                <span>지도</span>
+            </a>
+            <a href="treasure.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="8" width="18" height="12" rx="2"/>
+                    <path d="M7 8V6a5 5 0 0 1 10 0v2"/>
+                </svg>
+                <span>보물상자</span>
+            </a>
+            <a href="lotto.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M12 6v6l4 2"/>
+                </svg>
+                <span>로또</span>
+            </a>
+            <a href="mypage.html" class="nav-item active">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                </svg>
+                <span>마이</span>
+            </a>
+        </nav>
+    </div>
+    
+    <script>
+        // 필터 탭 클릭
+        document.querySelectorAll('.filter-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

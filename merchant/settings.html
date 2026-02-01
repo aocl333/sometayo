@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>설정 - 썸타요 파트너</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #F5F5F5;
+            min-height: 100vh;
+            color: #212121;
+        }
+        
+        .main-container {
+            max-width: 480px;
+            margin: 0 auto;
+            background: #F5F5F5;
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+        
+        /* 헤더 */
+        .top-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 16px;
+            background: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+        
+        .header-btn {
+            width: 32px;
+        }
+        
+        /* 프로필 섹션 */
+        .profile-section {
+            background: white;
+            padding: 20px 16px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 8px;
+        }
+        
+        .profile-avatar {
+            width: 56px;
+            height: 56px;
+            background: #FFF3E0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+        }
+        
+        .profile-info {
+            flex: 1;
+        }
+        
+        .profile-name {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        
+        .profile-email {
+            font-size: 0.8rem;
+            color: #757575;
+        }
+        
+        .profile-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            background: #E8F5E9;
+            color: #4CAF50;
+            font-size: 0.65rem;
+            font-weight: 600;
+            border-radius: 4px;
+            margin-top: 4px;
+        }
+        
+        /* 메뉴 그룹 */
+        .menu-group {
+            background: white;
+            margin-bottom: 8px;
+        }
+        
+        .menu-title {
+            padding: 12px 16px 8px;
+            font-size: 0.75rem;
+            color: #9E9E9E;
+            font-weight: 500;
+        }
+        
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            color: #212121;
+            border-bottom: 1px solid #F5F5F5;
+        }
+        
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+        
+        .menu-item:active {
+            background: #FAFAFA;
+        }
+        
+        .menu-item .icon {
+            width: 24px;
+            font-size: 1.1rem;
+            margin-right: 12px;
+        }
+        
+        .menu-item .text {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+        
+        .menu-item .arrow {
+            color: #BDBDBD;
+        }
+        
+        .menu-item .value {
+            font-size: 0.85rem;
+            color: #757575;
+            margin-right: 8px;
+        }
+        
+        /* 토글 스위치 */
+        .toggle {
+            width: 48px;
+            height: 28px;
+            background: #E0E0E0;
+            border-radius: 14px;
+            position: relative;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .toggle.on {
+            background: #FF6B35;
+        }
+        
+        .toggle::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: left 0.2s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        
+        .toggle.on::after {
+            left: 22px;
+        }
+        
+        /* 로그아웃 버튼 */
+        .logout-btn {
+            display: block;
+            width: calc(100% - 32px);
+            margin: 16px;
+            padding: 14px;
+            background: white;
+            border: 1px solid #E0E0E0;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            color: #F44336;
+            text-align: center;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        
+        .logout-btn:active {
+            background: #FAFAFA;
+        }
+        
+        /* 버전 정보 */
+        .version-info {
+            text-align: center;
+            padding: 16px;
+            font-size: 0.75rem;
+            color: #BDBDBD;
+        }
+        
+        /* 하단 네비게이션 */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 480px;
+            background: white;
+            border-top: 1px solid #EEEEEE;
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0 24px;
+            z-index: 100;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: 4px 16px;
+            color: #BDBDBD;
+            text-decoration: none;
+            font-size: 0.65rem;
+        }
+        
+        .nav-item.active {
+            color: #FF6B35;
+        }
+        
+        .nav-item .icon {
+            font-size: 1.3rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- 헤더 -->
+        <header class="top-header">
+            <span class="header-btn"></span>
+            <span class="header-title">설정</span>
+            <span class="header-btn"></span>
+        </header>
+        
+        <!-- 프로필 -->
+        <div class="profile-section">
+            <div class="profile-avatar">👤</div>
+            <div class="profile-info">
+                <div class="profile-name">김사장</div>
+                <div class="profile-email">owner@example.com</div>
+                <span class="profile-badge">✓ 인증된 사업자</span>
+            </div>
+        </div>
+        
+        <!-- 알림 설정 -->
+        <div class="menu-group">
+            <div class="menu-title">알림 설정</div>
+            <div class="menu-item">
+                <span class="icon">🔔</span>
+                <span class="text">방문 알림</span>
+                <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+            </div>
+            <div class="menu-item">
+                <span class="icon">📱</span>
+                <span class="text">앱 푸시 알림</span>
+                <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+            </div>
+            <div class="menu-item">
+                <span class="icon">💬</span>
+                <span class="text">카카오톡 알림</span>
+                <div class="toggle" onclick="this.classList.toggle('on')"></div>
+            </div>
+        </div>
+        
+        <!-- 계정 -->
+        <div class="menu-group">
+            <div class="menu-title">계정</div>
+            <div class="menu-item">
+                <span class="icon">🔒</span>
+                <span class="text">연결된 카카오</span>
+                <span class="value">user***@kakao.com</span>
+            </div>
+        </div>
+        
+        <!-- 고객센터 -->
+        <div class="menu-group">
+            <div class="menu-title">고객센터</div>
+            <a href="#" class="menu-item">
+                <span class="icon">❓</span>
+                <span class="text">자주 묻는 질문</span>
+                <span class="arrow">›</span>
+            </a>
+            <a href="#" class="menu-item">
+                <span class="icon">💬</span>
+                <span class="text">1:1 문의</span>
+                <span class="arrow">›</span>
+            </a>
+            <a href="#" class="menu-item">
+                <span class="icon">📄</span>
+                <span class="text">이용약관</span>
+                <span class="arrow">›</span>
+            </a>
+        </div>
+        
+        <!-- 로그아웃 -->
+        <a href="login.html" class="logout-btn">로그아웃</a>
+        
+        <div class="version-info">
+            썸타요 파트너 v1.0.0
+        </div>
+        
+        <!-- 하단 네비게이션 -->
+        <nav class="bottom-nav">
+            <a href="scan.html" class="nav-item">
+                <span class="icon">📷</span>
+                <span>스캔</span>
+            </a>
+            <a href="info.html" class="nav-item">
+                <span class="icon">🏪</span>
+                <span>내 가맹점</span>
+            </a>
+            <a href="settings.html" class="nav-item active">
+                <span class="icon">⚙️</span>
+                <span>설정</span>
+            </a>
+        </nav>
+    </div>
+</body>
+</html>

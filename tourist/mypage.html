@@ -4,183 +4,379 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>마이페이지 - 썸타요</title>
-    <link rel="stylesheet" href="../styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            color: #212121;
+        }
+        
+        .main-container {
+            max-width: 480px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+        
+        /* 헤더 */
+        .top-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 16px;
+            background: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .page-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+        
+        .header-btn {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #212121;
+            cursor: pointer;
+        }
+        
+        /* 프로필 */
+        .profile-section {
+            padding: 20px 16px;
+        }
+        
+        .profile-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        
+        .profile-avatar {
+            width: 56px;
+            height: 56px;
+            background: #F5F5F5;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .profile-info h2 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+        
+        .profile-info p {
+            font-size: 0.85rem;
+            color: #9E9E9E;
+        }
+        
+        .profile-arrow {
+            margin-left: auto;
+            color: #BDBDBD;
+            font-size: 1.2rem;
+        }
+        
+        /* 내 활동 요약 */
+        .activity-section {
+            padding: 0 16px 16px;
+        }
+        
+        .activity-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            background: #FAFAFA;
+            border-radius: 12px;
+            padding: 16px 8px;
+        }
+        
+        .activity-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #212121;
+        }
+        
+        .activity-item .value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #FF6B35;
+        }
+        
+        .activity-item .label {
+            font-size: 0.7rem;
+            color: #757575;
+            margin-top: 4px;
+        }
+        
+        /* 구분선 */
+        .divider {
+            height: 8px;
+            background: #F5F5F5;
+        }
+        
+        /* 메뉴 리스트 */
+        .menu-group {
+            padding: 8px 0;
+        }
+        
+        .menu-group-title {
+            padding: 12px 16px 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #9E9E9E;
+        }
+        
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            color: #212121;
+        }
+        
+        .menu-item:active {
+            background: #F5F5F5;
+        }
+        
+        .menu-item .icon {
+            width: 24px;
+            margin-right: 12px;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+        
+        .menu-item .text {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+        
+        .menu-item .badge {
+            background: #FF6B35;
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-right: 8px;
+        }
+        
+        .menu-item .arrow {
+            color: #BDBDBD;
+            font-size: 0.9rem;
+        }
+        
+        .menu-item.danger .text {
+            color: #F44336;
+        }
+        
+        /* 하단 네비게이션 */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 480px;
+            background: white;
+            border-top: 1px solid #EEEEEE;
+            display: flex;
+            justify-content: space-around;
+            padding: 6px 0 20px;
+            z-index: 100;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: 6px 12px;
+            color: #BDBDBD;
+            text-decoration: none;
+            font-size: 0.65rem;
+        }
+        
+        .nav-item.active {
+            color: #212121;
+        }
+        
+        .nav-item svg {
+            width: 22px;
+            height: 22px;
+        }
+    </style>
 </head>
 <body>
-    <div class="page-container">
-        <div class="page-title">
-            <h1>👤 마이페이지</h1>
-            <p>내 정보 및 이용 내역 관리</p>
-        </div>
-
-        <div class="device-grid">
-            <!-- 마이페이지 메인 -->
-            <div class="phone-frame">
-                <div class="phone-content" style="background: var(--gray-100);">
-                    <header class="app-header" style="background: var(--gray-100); border: none;">
-                        <div class="logo">마이페이지</div>
-                        <span style="font-size: 1.2rem;">⚙️</span>
-                    </header>
-
-                    <!-- 프로필 영역 -->
-                    <div style="background: white; margin: 16px; border-radius: 16px; padding: 24px; text-align: center;">
-                        <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--primary) 0%, #FF8C5A 100%); border-radius: 50%; margin: 0 auto 12px; display: flex; align-items: center; justify-content: center; font-size: 2rem;">👤</div>
-                        <h3 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 4px;">김재오 님</h3>
-                        <p style="font-size: 0.85rem; color: var(--gray-500);">010-1234-5678</p>
-                    </div>
-
-                    <!-- 보유 티켓 -->
-                    <div style="background: white; margin: 0 16px 16px; border-radius: 16px; padding: 20px;">
-                        <h4 style="font-size: 0.9rem; color: var(--gray-500); margin-bottom: 12px;">보유 티켓</h4>
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <div style="width: 48px; height: 48px; background: #FFF3E0; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">🎫</div>
-                            <div style="flex: 1;">
-                                <div style="font-size: 1rem; font-weight: 600;">현대 홈쇼핑 로또 패키지</div>
-                                <div style="font-size: 0.85rem; color: var(--gray-500);">3일권 · D-2 만료</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 메뉴 리스트 -->
-                    <div style="background: white; margin: 0 16px; border-radius: 16px; overflow: hidden;">
-                        <div style="display: flex; align-items: center; padding: 16px 20px; border-bottom: 1px solid var(--gray-200);">
-                            <span style="font-size: 1.2rem; margin-right: 12px;">📋</span>
-                            <span style="flex: 1; font-size: 0.95rem;">이용 내역</span>
-                            <span style="color: var(--gray-400);">›</span>
-                        </div>
-                        <div style="display: flex; align-items: center; padding: 16px 20px; border-bottom: 1px solid var(--gray-200);">
-                            <span style="font-size: 1.2rem; margin-right: 12px;">🔔</span>
-                            <span style="flex: 1; font-size: 0.95rem;">알림 설정</span>
-                            <span style="color: var(--gray-400);">›</span>
-                        </div>
-                        <div style="display: flex; align-items: center; padding: 16px 20px; border-bottom: 1px solid var(--gray-200);">
-                            <span style="font-size: 1.2rem; margin-right: 12px;">✏️</span>
-                            <span style="flex: 1; font-size: 0.95rem;">개인정보 수정</span>
-                            <span style="color: var(--gray-400);">›</span>
-                        </div>
-                        <div style="display: flex; align-items: center; padding: 16px 20px; border-bottom: 1px solid var(--gray-200);">
-                            <span style="font-size: 1.2rem; margin-right: 12px;">📞</span>
-                            <span style="flex: 1; font-size: 0.95rem;">고객센터</span>
-                            <span style="color: var(--gray-400);">›</span>
-                        </div>
-                        <div style="display: flex; align-items: center; padding: 16px 20px;">
-                            <span style="font-size: 1.2rem; margin-right: 12px;">🚪</span>
-                            <span style="flex: 1; font-size: 0.95rem; color: var(--danger);">로그아웃</span>
-                        </div>
-                    </div>
+    <div class="main-container">
+        <header class="top-header">
+            <div class="header-btn" style="visibility: hidden;">←</div>
+            <span class="page-title">나의 썸타요</span>
+            <div class="header-btn">⚙️</div>
+        </header>
+        
+        <!-- 프로필 -->
+        <a href="#" class="profile-section" style="display: block; text-decoration: none; color: inherit;">
+            <div class="profile-row">
+                <div class="profile-avatar">👤</div>
+                <div class="profile-info">
+                    <h2>김제주</h2>
+                    <p>프로필 보기</p>
                 </div>
-
-                <nav class="bottom-tab">
-                    <div class="tab-item">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                        <span>홈</span>
-                    </div>
-                    <div class="tab-item">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z"/></svg>
-                        <span>내주변</span>
-                    </div>
-                    <div class="tab-item">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                        <span>여행권</span>
-                    </div>
-                    <div class="tab-item">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
-                        <span>로또</span>
-                    </div>
-                    <div class="tab-item active">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                        <span>마이</span>
-                    </div>
-                </nav>
+                <span class="profile-arrow">›</span>
             </div>
-
-            <!-- 이용 내역 화면 -->
-            <div class="phone-frame">
-                <div class="phone-content" style="background: var(--gray-100);">
-                    <header class="app-header" style="background: white;">
-                        <span style="font-size: 1.2rem;">←</span>
-                        <div style="font-weight: 600;">이용 내역</div>
-                        <span style="width: 24px;"></span>
-                    </header>
-
-                    <div style="padding: 16px;">
-                        <h4 style="font-size: 0.9rem; color: var(--gray-500); margin-bottom: 12px;">2026년 1월</h4>
-
-                        <!-- 방문 내역 카드들 -->
-                        <div style="background: white; border-radius: 12px; padding: 16px; margin-bottom: 12px;">
-                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
-                                <div>
-                                    <div style="font-size: 1rem; font-weight: 600;">황금룡 짜장</div>
-                                    <div style="font-size: 0.8rem; color: var(--gray-500);">1월 30일 12:34</div>
-                                </div>
-                                <span style="background: #FFF3E0; color: var(--primary); padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">🍖 탕수육 무료</span>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 6px; background: var(--gray-100); padding: 8px 12px; border-radius: 8px;">
-                                <span style="font-size: 0.85rem; color: var(--gray-600);">획득 로또 번호</span>
-                                <span style="width: 28px; height: 28px; background: linear-gradient(135deg, #FFD700, #FFA500); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700;">27</span>
-                            </div>
-                        </div>
-
-                        <div style="background: white; border-radius: 12px; padding: 16px; margin-bottom: 12px;">
-                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
-                                <div>
-                                    <div style="font-size: 1rem; font-weight: 600;">바다뷰 카페</div>
-                                    <div style="font-size: 0.8rem; color: var(--gray-500);">1월 29일 15:22</div>
-                                </div>
-                                <span style="background: #E3F2FD; color: var(--secondary); padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">💰 20% 할인</span>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 6px; background: var(--gray-100); padding: 8px 12px; border-radius: 8px;">
-                                <span style="font-size: 0.85rem; color: var(--gray-600);">획득 로또 번호</span>
-                                <span style="width: 28px; height: 28px; background: linear-gradient(135deg, #FFD700, #FFA500); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700;">35</span>
-                            </div>
-                        </div>
-
-                        <div style="background: white; border-radius: 12px; padding: 16px; margin-bottom: 12px;">
-                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
-                                <div>
-                                    <div style="font-size: 1rem; font-weight: 600;">섬마을 횟집</div>
-                                    <div style="font-size: 0.8rem; color: var(--gray-500);">1월 28일 18:45</div>
-                                </div>
-                                <span style="background: #FFF3E0; color: var(--primary); padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">🦐 새우튀김</span>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 6px; background: var(--gray-100); padding: 8px 12px; border-radius: 8px;">
-                                <span style="font-size: 0.85rem; color: var(--gray-600);">획득 로또 번호</span>
-                                <span style="width: 28px; height: 28px; background: linear-gradient(135deg, #FFD700, #FFA500); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700;">12</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <nav class="bottom-tab">
-                    <div class="tab-item">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                        <span>홈</span>
-                    </div>
-                    <div class="tab-item">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z"/></svg>
-                        <span>내주변</span>
-                    </div>
-                    <div class="tab-item">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                        <span>여행권</span>
-                    </div>
-                    <div class="tab-item">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
-                        <span>로또</span>
-                    </div>
-                    <div class="tab-item active">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                        <span>마이</span>
-                    </div>
-                </nav>
+        </a>
+        
+        <!-- 내 활동 요약 -->
+        <div class="activity-section">
+            <div class="activity-grid">
+                <a href="treasure.html" class="activity-item">
+                    <span class="value">5</span>
+                    <span class="label">보유 망치</span>
+                </a>
+                <a href="lotto.html" class="activity-item">
+                    <span class="value">4/6</span>
+                    <span class="label">로또번호</span>
+                </a>
+                <a href="my-prizes.html" class="activity-item">
+                    <span class="value">8</span>
+                    <span class="label">당첨 경품</span>
+                </a>
+                <a href="review.html" class="activity-item">
+                    <span class="value">3</span>
+                    <span class="label">작성 리뷰</span>
+                </a>
             </div>
         </div>
-
-        <div style="text-align: center; margin-top: 40px;">
-            <a href="../index.html" style="color: white; text-decoration: none; opacity: 0.8;">← 전체 화면 목록으로</a>
+        
+        <div class="divider"></div>
+        
+        <!-- 여행 -->
+        <div class="menu-group">
+            <div class="menu-group-title">나의 여행</div>
+            <a href="ticket.html" class="menu-item">
+                <span class="icon">🎫</span>
+                <span class="text">여행권</span>
+                <span class="badge">D-2</span>
+                <span class="arrow">›</span>
+            </a>
+            <a href="treasure.html" class="menu-item">
+                <span class="icon">📦</span>
+                <span class="text">보물상자</span>
+                <span class="arrow">›</span>
+            </a>
+            <a href="my-prizes.html" class="menu-item">
+                <span class="icon">🎁</span>
+                <span class="text">내 경품</span>
+                <span class="arrow">›</span>
+            </a>
+            <a href="lotto.html" class="menu-item">
+                <span class="icon">🎰</span>
+                <span class="text">로또함</span>
+                <span class="arrow">›</span>
+            </a>
         </div>
+        
+        <div class="divider"></div>
+        
+        <!-- 활동 -->
+        <div class="menu-group">
+            <div class="menu-group-title">나의 활동</div>
+            <a href="review.html" class="menu-item">
+                <span class="icon">✍️</span>
+                <span class="text">리뷰 작성</span>
+                <span class="arrow">›</span>
+            </a>
+            <a href="#" class="menu-item">
+                <span class="icon">📋</span>
+                <span class="text">이용 내역</span>
+                <span class="arrow">›</span>
+            </a>
+        </div>
+        
+        <div class="divider"></div>
+        
+        <!-- 기타 -->
+        <div class="menu-group">
+            <div class="menu-group-title">기타</div>
+            <a href="#" class="menu-item">
+                <span class="icon">🔔</span>
+                <span class="text">알림 설정</span>
+                <span class="arrow">›</span>
+            </a>
+            <a href="#" class="menu-item">
+                <span class="icon">❓</span>
+                <span class="text">자주 묻는 질문</span>
+                <span class="arrow">›</span>
+            </a>
+            <a href="#" class="menu-item">
+                <span class="icon">📞</span>
+                <span class="text">고객센터</span>
+                <span class="arrow">›</span>
+            </a>
+            <a href="login.html" class="menu-item danger">
+                <span class="icon">🚪</span>
+                <span class="text">로그아웃</span>
+                <span class="arrow">›</span>
+            </a>
+        </div>
+        
+        <!-- 하단 네비게이션 -->
+        <nav class="bottom-nav">
+            <a href="home.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                    <polyline points="9 22 9 12 15 12 15 22"/>
+                </svg>
+                <span>홈</span>
+            </a>
+            <a href="map.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="10" r="3"/>
+                    <path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z"/>
+                </svg>
+                <span>지도</span>
+            </a>
+            <a href="treasure.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="8" width="18" height="12" rx="2"/>
+                    <path d="M7 8V6a5 5 0 0 1 10 0v2"/>
+                </svg>
+                <span>보물상자</span>
+            </a>
+            <a href="lotto.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M12 6v6l4 2"/>
+                </svg>
+                <span>로또</span>
+            </a>
+            <a href="mypage.html" class="nav-item active">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                </svg>
+                <span>나의 썸타요</span>
+            </a>
+        </nav>
     </div>
 </body>
 </html>
-

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>설정 - 썸타요 Admin</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body style="background: var(--gray-100);">
+    <div class="admin-layout">
+        <!-- 사이드바 -->
+        <aside class="admin-sidebar">
+            <div class="admin-logo">🏝️ 썸타요 Admin</div>
+            <nav class="admin-nav">
+                <a href="dashboard.html">📊 대시보드</a>
+                <a href="members.html">👥 회원 관리</a>
+                <a href="stores.html">🏪 가맹점 관리</a>
+                <a href="tickets.html">🎫 티켓 관리</a>
+                <a href="prizes.html">🎁 경품 관리</a>
+                <a href="lotto.html">🎰 로또 관리</a>
+                <a href="settings.html" class="active">⚙️ 설정</a>
+            </nav>
+        </aside>
+
+        <!-- 메인 콘텐츠 -->
+        <main class="admin-content">
+            <div class="admin-header">
+                <h1>⚙️ 설정</h1>
+            </div>
+
+            <!-- 설정 그리드 -->
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;">
+                
+                <!-- 서비스 설정 -->
+                <div style="background: white; border-radius: 16px; padding: 24px; box-shadow: var(--shadow);">
+                    <h3 style="font-size: 1.1rem; margin-bottom: 20px;">🏝️ 서비스 설정</h3>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; font-size: 0.85rem; color: var(--gray-600); margin-bottom: 8px;">서비스 이름</label>
+                        <input type="text" value="썸타요" style="width: 100%; padding: 12px 16px; border: 1px solid var(--gray-300); border-radius: 8px;">
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; font-size: 0.85rem; color: var(--gray-600); margin-bottom: 8px;">서비스 지역</label>
+                        <select style="width: 100%; padding: 12px 16px; border: 1px solid var(--gray-300); border-radius: 8px;">
+                            <option>제주도</option>
+                            <option>울릉도</option>
+                            <option>전체</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: flex; align-items: center; gap: 12px; cursor: pointer;">
+                            <input type="checkbox" checked style="width: 20px; height: 20px;">
+                            <span>서비스 운영 중</span>
+                        </label>
+                    </div>
+
+                    <button style="width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer;">저장</button>
+                </div>
+
+                <!-- 알림 설정 -->
+                <div style="background: white; border-radius: 16px; padding: 24px; box-shadow: var(--shadow);">
+                    <h3 style="font-size: 1.1rem; margin-bottom: 20px;">🔔 알림 설정</h3>
+                    
+                    <div style="margin-bottom: 16px; padding: 16px; background: var(--gray-50); border-radius: 8px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <div style="font-weight: 500;">신규 회원 알림</div>
+                                <div style="font-size: 0.85rem; color: var(--gray-500);">새 회원 가입 시 알림</div>
+                            </div>
+                            <label style="position: relative; display: inline-block; width: 50px; height: 28px;">
+                                <input type="checkbox" checked style="opacity: 0; width: 0; height: 0;">
+                                <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background: var(--primary); border-radius: 14px;"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 16px; padding: 16px; background: var(--gray-50); border-radius: 8px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <div style="font-weight: 500;">가맹점 신청 알림</div>
+                                <div style="font-size: 0.85rem; color: var(--gray-500);">새 가맹점 신청 시 알림</div>
+                            </div>
+                            <label style="position: relative; display: inline-block; width: 50px; height: 28px;">
+                                <input type="checkbox" checked style="opacity: 0; width: 0; height: 0;">
+                                <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background: var(--primary); border-radius: 14px;"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 16px; padding: 16px; background: var(--gray-50); border-radius: 8px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <div style="font-weight: 500;">로또 추첨 알림</div>
+                                <div style="font-size: 0.85rem; color: var(--gray-500);">추첨일 리마인더</div>
+                            </div>
+                            <label style="position: relative; display: inline-block; width: 50px; height: 28px;">
+                                <input type="checkbox" checked style="opacity: 0; width: 0; height: 0;">
+                                <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background: var(--primary); border-radius: 14px;"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 관리자 계정 -->
+                <div style="background: white; border-radius: 16px; padding: 24px; box-shadow: var(--shadow);">
+                    <h3 style="font-size: 1.1rem; margin-bottom: 20px;">👤 관리자 계정</h3>
+                    
+                    <div style="display: flex; align-items: center; gap: 16px; padding: 16px; background: var(--gray-50); border-radius: 8px; margin-bottom: 16px;">
+                        <div style="width: 48px; height: 48px; background: var(--gray-300); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">👤</div>
+                        <div>
+                            <div style="font-weight: 600;">관리자</div>
+                            <div style="font-size: 0.85rem; color: var(--gray-500);">admin@sometayo.com</div>
+                        </div>
+                    </div>
+
+                    <div style="border: 1px solid var(--gray-200); border-radius: 8px; overflow: hidden;">
+                        <div style="display: flex; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid var(--gray-200);">
+                            <span>연결된 카카오</span>
+                            <span style="color: var(--gray-500);">admin***@kakao.com</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid var(--gray-200);">
+                            <span>가입일</span>
+                            <span style="color: var(--gray-500);">2026.01.01</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 14px 16px;">
+                            <span>권한</span>
+                            <span style="color: var(--primary); font-weight: 500;">최고 관리자</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 시스템 정보 -->
+                <div style="background: white; border-radius: 16px; padding: 24px; box-shadow: var(--shadow);">
+                    <h3 style="font-size: 1.1rem; margin-bottom: 20px;">💻 시스템 정보</h3>
+                    
+                    <div style="border: 1px solid var(--gray-200); border-radius: 8px; overflow: hidden;">
+                        <div style="display: flex; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid var(--gray-200);">
+                            <span>버전</span>
+                            <span style="color: var(--gray-500);">v1.0.0</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid var(--gray-200);">
+                            <span>최근 업데이트</span>
+                            <span style="color: var(--gray-500);">2026.02.01</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid var(--gray-200);">
+                            <span>서버 상태</span>
+                            <span style="color: var(--success);">● 정상</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 14px 16px;">
+                            <span>DB 상태</span>
+                            <span style="color: var(--success);">● 정상</span>
+                        </div>
+                    </div>
+
+                    <button style="width: 100%; margin-top: 16px; padding: 12px; background: white; border: 1px solid var(--gray-300); border-radius: 8px; cursor: pointer;">📋 시스템 로그 보기</button>
+                </div>
+            </div>
+
+            <!-- 로그아웃 -->
+            <div style="margin-top: 32px; text-align: center;">
+                <button onclick="location.href='login.html'" style="padding: 14px 32px; background: white; border: 1px solid var(--danger); color: var(--danger); border-radius: 8px; cursor: pointer; font-size: 1rem;">🚪 로그아웃</button>
+            </div>
+        </main>
+    </div>
+
+    <div style="position: fixed; bottom: 20px; right: 20px;">
+        <a href="../index.html" style="background: var(--primary); color: white; padding: 12px 24px; border-radius: 30px; text-decoration: none; box-shadow: 0 4px 12px rgba(255,107,53,0.4);">← 전체 목록</a>
+    </div>
+</body>
+</html>

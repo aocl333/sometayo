@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>리뷰 작성 - 썸타요</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            background: #FAFAFA;
+            min-height: 100vh;
+        }
+        .review-container {
+            max-width: 480px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            padding-bottom: 100px;
+        }
+        .top-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            background: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #E5E5E5;
+        }
+        .back-btn {
+            color: #333;
+            text-decoration: none;
+            font-size: 1.5rem;
+        }
+        .page-title-header {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+        .header-placeholder {
+            width: 24px;
+        }
+        
+        .reward-banner {
+            margin: 16px;
+            padding: 16px;
+            background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .reward-banner .icon { font-size: 2rem; }
+        .reward-banner .text { flex: 1; }
+        .reward-banner .text h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #FF6B35;
+            margin-bottom: 4px;
+        }
+        .reward-banner .text p {
+            font-size: 0.8rem;
+            color: #666;
+        }
+        
+        .store-select {
+            margin: 0 16px 16px;
+            padding: 16px;
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #EEEEEE;
+        }
+        .store-select label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .store-select select {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #E0E0E0;
+            border-radius: 8px;
+            font-size: 1rem;
+            background: white;
+        }
+        
+        .rating-section {
+            margin: 0 16px 16px;
+            padding: 24px;
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #EEEEEE;
+            text-align: center;
+        }
+        .rating-section label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        .stars {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+        }
+        .star {
+            font-size: 2.5rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .star:hover { transform: scale(1.2); }
+        .star.active { color: #FFD700; }
+        .star.inactive { color: #E0E0E0; }
+        
+        .review-form {
+            margin: 0 16px 16px;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #EEEEEE;
+        }
+        .review-form label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .review-form textarea {
+            width: 100%;
+            height: 150px;
+            padding: 14px;
+            border: 1px solid #E0E0E0;
+            border-radius: 8px;
+            font-size: 1rem;
+            resize: none;
+            font-family: inherit;
+            box-sizing: border-box;
+        }
+        .review-form textarea:focus {
+            outline: none;
+            border-color: #FF6B35;
+        }
+        .char-count {
+            text-align: right;
+            font-size: 0.8rem;
+            color: #999;
+            margin-top: 8px;
+        }
+        
+        .photo-section {
+            margin: 0 16px 16px;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #EEEEEE;
+        }
+        .photo-section label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+        .photo-add {
+            aspect-ratio: 1;
+            border: 2px dashed #E0E0E0;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #BDBDBD;
+            font-size: 0.8rem;
+        }
+        .photo-add .icon { font-size: 1.5rem; margin-bottom: 4px; }
+        
+        .submit-section {
+            padding: 16px;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #FF6B35 0%, #FF8C5A 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+        }
+        .submit-btn:disabled {
+            background: #E0E0E0;
+            box-shadow: none;
+        }
+        
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 480px;
+            background: white;
+            border-top: 1px solid #E5E5E5;
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0 20px;
+            z-index: 100;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 8px 12px;
+            color: #BDBDBD;
+            text-decoration: none;
+            font-size: 0.7rem;
+        }
+        .nav-item.active { color: #FF6B35; }
+        .nav-item svg { width: 24px; height: 24px; }
+    </style>
+</head>
+<body>
+    <div class="review-container">
+        <header class="top-header">
+            <a href="mypage.html" class="back-btn">←</a>
+            <span class="page-title-header">리뷰 작성</span>
+            <div class="header-placeholder"></div>
+        </header>
+        
+        <div class="reward-banner">
+            <span class="icon">🎁</span>
+            <div class="text">
+                <h4>리뷰 작성 보상</h4>
+                <p>리뷰 작성 시 망치 1개 + 로또번호 1개 지급!</p>
+            </div>
+        </div>
+        
+        <div class="store-select">
+            <label>🏪 방문한 가맹점</label>
+            <select>
+                <option value="">가맹점을 선택하세요</option>
+                <option value="1">황금룡 짜장면</option>
+                <option value="2">바다뷰 카페</option>
+                <option value="3">제주올레횟집</option>
+                <option value="4">비밀의 해변 카페</option>
+            </select>
+        </div>
+        
+        <div class="rating-section">
+            <label>⭐ 별점을 선택하세요</label>
+            <div class="stars">
+                <span class="star active" data-rating="1">★</span>
+                <span class="star active" data-rating="2">★</span>
+                <span class="star active" data-rating="3">★</span>
+                <span class="star active" data-rating="4">★</span>
+                <span class="star inactive" data-rating="5">★</span>
+            </div>
+        </div>
+        
+        <div class="review-form">
+            <label>📝 리뷰 내용</label>
+            <textarea placeholder="방문 경험을 자세히 작성해주세요. (최소 20자 이상)" id="reviewText"></textarea>
+            <div class="char-count"><span id="charCount">0</span>/500</div>
+        </div>
+        
+        <div class="photo-section">
+            <label>📷 사진 첨부 (선택)</label>
+            <div class="photo-grid">
+                <div class="photo-add">
+                    <span class="icon">+</span>
+                    <span>사진추가</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="submit-section">
+            <button class="submit-btn" onclick="submitReview()">
+                리뷰 작성하고 보상받기 🎁
+            </button>
+        </div>
+        
+        <nav class="bottom-nav">
+            <a href="home.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                    <polyline points="9 22 9 12 15 12 15 22"/>
+                </svg>
+                <span>홈</span>
+            </a>
+            <a href="map.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="10" r="3"/>
+                    <path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z"/>
+                </svg>
+                <span>지도</span>
+            </a>
+            <a href="treasure.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="8" width="18" height="12" rx="2"/>
+                    <path d="M7 8V6a5 5 0 0 1 10 0v2"/>
+                </svg>
+                <span>보물상자</span>
+            </a>
+            <a href="lotto.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M12 6v6l4 2"/>
+                </svg>
+                <span>로또</span>
+            </a>
+            <a href="mypage.html" class="nav-item active">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                </svg>
+                <span>마이</span>
+            </a>
+        </nav>
+    </div>
+    
+    <script>
+        // 별점 클릭
+        document.querySelectorAll('.star').forEach(star => {
+            star.addEventListener('click', function() {
+                const rating = this.dataset.rating;
+                document.querySelectorAll('.star').forEach((s, i) => {
+                    s.classList.toggle('active', i < rating);
+                    s.classList.toggle('inactive', i >= rating);
+                });
+            });
+        });
+        
+        // 글자수 카운트
+        document.getElementById('reviewText').addEventListener('input', function() {
+            document.getElementById('charCount').textContent = this.value.length;
+        });
+        
+        // 리뷰 제출
+        function submitReview() {
+            const text = document.getElementById('reviewText').value;
+            if (text.length < 20) {
+                alert('리뷰는 최소 20자 이상 작성해주세요.');
+                return;
+            }
+            alert('🎉 리뷰가 등록되었습니다!\n\n보상 지급 완료:\n🔨 망치 1개\n🎫 로또번호 1개');
+            window.location.href = 'mypage.html';
+        }
+    </script>
+</body>
+</html>

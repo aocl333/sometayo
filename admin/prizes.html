@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>경품관리 - 썸타요 Admin</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- 사이드바 -->
+        <aside class="admin-sidebar">
+            <div class="admin-logo">🏝️ 썸타요 Admin</div>
+            <nav class="admin-nav">
+                <a href="dashboard.html">📊 대시보드</a>
+                <a href="members.html">👥 회원 관리</a>
+                <a href="stores.html">🏪 가맹점 관리</a>
+                <a href="tickets.html">🎫 티켓 관리</a>
+                <a href="prizes.html" class="active">🎁 경품 관리</a>
+                <a href="lotto.html">🎰 로또 관리</a>
+                <a href="settings.html">⚙️ 설정</a>
+            </nav>
+        </aside>
+
+        <!-- 메인 콘텐츠 -->
+        <main class="admin-content">
+            <div class="admin-header">
+                <h1>🎁 경품 관리</h1>
+                <button style="padding: 10px 20px; background: var(--primary); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 500;" onclick="openAddModal()">+ 등록</button>
+            </div>
+
+            <!-- 경품 통계 -->
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="label">총 경품</div>
+                    <div class="value">24</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="label">진행중</div>
+                    <div class="value" style="color: #2ECC71;">12</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="label">당첨자 대기</div>
+                    <div class="value" style="color: #F39C12;">8</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="label">완료</div>
+                    <div class="value" style="color: #95A5A6;">4</div>
+                </div>
+            </div>
+
+            <!-- 경품 목록 -->
+            <div class="data-table-wrapper">
+                <div class="table-header">
+                    <h3>경품 목록</h3>
+                    <div class="search-box">
+                        <select style="padding: 10px; border: 1px solid var(--gray-300); border-radius: 8px;">
+                            <option>전체 등급</option>
+                            <option>🥇 금</option>
+                            <option>🥈 은</option>
+                            <option>🥉 동</option>
+                        </select>
+                        <input type="text" placeholder="경품명 검색">
+                        <button>검색</button>
+                    </div>
+                </div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>경품명</th>
+                            <th>등급</th>
+                            <th>망치 횟수</th>
+                            <th>수량</th>
+                            <th>당첨자</th>
+                            <th>상태</th>
+                            <th>관리</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <span style="font-size: 1.5rem;">🎧</span>
+                                    <span>에어팟 프로 2세대</span>
+                                </div>
+                            </td>
+                            <td><span style="background: linear-gradient(135deg, #FFD700, #FFA500); padding: 4px 12px; border-radius: 20px; color: white; font-size: 0.8rem;">🥇 금</span></td>
+                            <td>4회</td>
+                            <td>5</td>
+                            <td>2/5</td>
+                            <td><span class="status-badge active">진행중</span></td>
+                            <td>
+                                <button style="padding: 6px 12px; border: none; background: var(--gray-200); border-radius: 6px; cursor: pointer; margin-right: 4px;">수정</button>
+                                <button style="padding: 6px 12px; border: none; background: #FFEBEE; color: #E74C3C; border-radius: 6px; cursor: pointer;">삭제</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <span style="font-size: 1.5rem;">💻</span>
+                                    <span>맥북 에어 M3</span>
+                                </div>
+                            </td>
+                            <td><span style="background: linear-gradient(135deg, #FFD700, #FFA500); padding: 4px 12px; border-radius: 20px; color: white; font-size: 0.8rem;">🥇 금</span></td>
+                            <td>5회</td>
+                            <td>1</td>
+                            <td>0/1</td>
+                            <td><span class="status-badge active">진행중</span></td>
+                            <td>
+                                <button style="padding: 6px 12px; border: none; background: var(--gray-200); border-radius: 6px; cursor: pointer; margin-right: 4px;">수정</button>
+                                <button style="padding: 6px 12px; border: none; background: #FFEBEE; color: #E74C3C; border-radius: 6px; cursor: pointer;">삭제</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <span style="font-size: 1.5rem;">💳</span>
+                                    <span>신세계 상품권 5만원</span>
+                                </div>
+                            </td>
+                            <td><span style="background: linear-gradient(135deg, #C0C0C0, #A0A0A0); padding: 4px 12px; border-radius: 20px; color: white; font-size: 0.8rem;">🥈 은</span></td>
+                            <td>2~3회</td>
+                            <td>20</td>
+                            <td>12/20</td>
+                            <td><span class="status-badge active">진행중</span></td>
+                            <td>
+                                <button style="padding: 6px 12px; border: none; background: var(--gray-200); border-radius: 6px; cursor: pointer; margin-right: 4px;">수정</button>
+                                <button style="padding: 6px 12px; border: none; background: #FFEBEE; color: #E74C3C; border-radius: 6px; cursor: pointer;">삭제</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <span style="font-size: 1.5rem;">☕</span>
+                                    <span>스타벅스 아메리카노</span>
+                                </div>
+                            </td>
+                            <td><span style="background: linear-gradient(135deg, #CD7F32, #B87333); padding: 4px 12px; border-radius: 20px; color: white; font-size: 0.8rem;">🥉 동</span></td>
+                            <td>1회</td>
+                            <td>100</td>
+                            <td>45/100</td>
+                            <td><span class="status-badge active">진행중</span></td>
+                            <td>
+                                <button style="padding: 6px 12px; border: none; background: var(--gray-200); border-radius: 6px; cursor: pointer; margin-right: 4px;">수정</button>
+                                <button style="padding: 6px 12px; border: none; background: #FFEBEE; color: #E74C3C; border-radius: 6px; cursor: pointer;">삭제</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <span style="font-size: 1.5rem;">🎫</span>
+                                    <span>로또번호 1개</span>
+                                </div>
+                            </td>
+                            <td><span style="background: linear-gradient(135deg, #CD7F32, #B87333); padding: 4px 12px; border-radius: 20px; color: white; font-size: 0.8rem;">🥉 동</span></td>
+                            <td>1회</td>
+                            <td>무제한</td>
+                            <td>234</td>
+                            <td><span class="status-badge active">진행중</span></td>
+                            <td>
+                                <button style="padding: 6px 12px; border: none; background: var(--gray-200); border-radius: 6px; cursor: pointer; margin-right: 4px;">수정</button>
+                                <button style="padding: 6px 12px; border: none; background: #FFEBEE; color: #E74C3C; border-radius: 6px; cursor: pointer;">삭제</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- 경품 등록 모달 -->
+    <div id="addModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center;">
+        <div style="background: white; border-radius: 16px; width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+            <div style="padding: 20px 24px; border-bottom: 1px solid var(--gray-200); display: flex; justify-content: space-between; align-items: center;">
+                <h3 style="font-size: 1.1rem;">🎁 경품 등록</h3>
+                <span style="font-size: 1.5rem; cursor: pointer; color: var(--gray-400);" onclick="closeModal()">×</span>
+            </div>
+            <div style="padding: 24px;">
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; font-size: 0.85rem; color: var(--gray-600); margin-bottom: 8px;">경품명 *</label>
+                    <input type="text" placeholder="예: 에어팟 프로" style="width: 100%; padding: 12px 16px; border: 1px solid var(--gray-300); border-radius: 8px; font-size: 0.95rem;">
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; font-size: 0.85rem; color: var(--gray-600); margin-bottom: 8px;">아이콘 (이모지)</label>
+                    <input type="text" placeholder="예: 🎧" style="width: 100%; padding: 12px 16px; border: 1px solid var(--gray-300); border-radius: 8px; font-size: 0.95rem;">
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px;">
+                    <div>
+                        <label style="display: block; font-size: 0.85rem; color: var(--gray-600); margin-bottom: 8px;">등급 *</label>
+                        <select style="width: 100%; padding: 12px 16px; border: 1px solid var(--gray-300); border-radius: 8px; font-size: 0.95rem;">
+                            <option>선택</option>
+                            <option>🥇 금</option>
+                            <option>🥈 은</option>
+                            <option>🥉 동</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="display: block; font-size: 0.85rem; color: var(--gray-600); margin-bottom: 8px;">망치 횟수 *</label>
+                        <select style="width: 100%; padding: 12px 16px; border: 1px solid var(--gray-300); border-radius: 8px; font-size: 0.95rem;">
+                            <option>선택</option>
+                            <option>1회</option>
+                            <option>2회</option>
+                            <option>3회</option>
+                            <option>4회</option>
+                            <option>5회</option>
+                        </select>
+                    </div>
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; font-size: 0.85rem; color: var(--gray-600); margin-bottom: 8px;">수량 *</label>
+                    <input type="number" placeholder="예: 10" style="width: 100%; padding: 12px 16px; border: 1px solid var(--gray-300); border-radius: 8px; font-size: 0.95rem;">
+                    <div style="margin-top: 8px;">
+                        <label style="display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--gray-600); cursor: pointer;">
+                            <input type="checkbox"> 무제한
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div style="padding: 16px 24px; background: var(--gray-50); display: flex; justify-content: flex-end; gap: 12px; border-radius: 0 0 16px 16px;">
+                <button style="padding: 12px 24px; border: 1px solid var(--gray-300); background: white; border-radius: 8px; cursor: pointer;" onclick="closeModal()">취소</button>
+                <button style="padding: 12px 24px; border: none; background: var(--primary); color: white; border-radius: 8px; cursor: pointer;">등록하기</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openAddModal() {
+            document.getElementById('addModal').style.display = 'flex';
+        }
+        
+        function closeModal() {
+            document.getElementById('addModal').style.display = 'none';
+        }
+        
+        // 모달 바깥 클릭 시 닫기
+        document.getElementById('addModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+    </script>
+</body>
+</html>

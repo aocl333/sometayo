@@ -3,116 +3,479 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>내 주변 지도 - 썸타요</title>
+    <title>지도 - 썸타요</title>
     <link rel="stylesheet" href="../styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { background: #FAFAFA; margin: 0; }
+        .map-container {
+            max-width: 480px;
+            margin: 0 auto;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* 지도 영역 */
+        .map-area {
+            width: 100%;
+            height: 100%;
+            background: #E8F4EA;
+            position: relative;
+        }
+        
+        /* 상단 검색바 */
+        .search-bar {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            right: 16px;
+            z-index: 10;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 14px 16px;
+            padding-left: 44px;
+            background: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+            box-sizing: border-box;
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.1rem;
+        }
+        
+        /* 필터 탭 */
+        .filter-tabs {
+            position: absolute;
+            top: 72px;
+            left: 16px;
+            right: 16px;
+            z-index: 10;
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+        }
+        
+        .filter-tab {
+            padding: 8px 16px;
+            background: white;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+            cursor: pointer;
+            border: none;
+        }
+        
+        .filter-tab.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* 지도 핀 - 가맹점 */
+        .map-pin {
+            position: absolute;
+            cursor: pointer;
+            transform: translate(-50%, -100%);
+        }
+        
+        .pin-content {
+            background: var(--primary);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(255,107,53,0.4);
+            white-space: nowrap;
+        }
+        
+        .pin-content.cafe {
+            background: var(--secondary);
+            box-shadow: 0 2px 8px rgba(0,78,137,0.4);
+        }
+        
+        .pin-arrow {
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 8px solid var(--primary);
+            margin: 0 auto;
+        }
+        
+        .pin-arrow.cafe {
+            border-top-color: var(--secondary);
+        }
+        
+        /* 보물상자 핀 */
+        .treasure-pin {
+            position: absolute;
+            cursor: pointer;
+            transform: translate(-50%, -50%);
+            animation: float 2s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+            50% { transform: translate(-50%, -50%) translateY(-10px); }
+        }
+        
+        .treasure-box-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            box-shadow: 0 4px 15px rgba(255, 165, 0, 0.5);
+            position: relative;
+        }
+        
+        .treasure-grade {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+        
+        .treasure-grade.gold { background: #FFD700; }
+        .treasure-grade.silver { background: #C0C0C0; }
+        .treasure-grade.bronze { background: #CD7F32; color: white; }
+        
+        /* 현재 위치 */
+        .current-location {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .location-dot {
+            width: 20px;
+            height: 20px;
+            background: #4285F4;
+            border: 3px solid white;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(66,133,244,0.4);
+        }
+        
+        .location-pulse {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: rgba(66,133,244,0.2);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
+        }
+        
+        /* 캐릭터 */
+        .character {
+            position: absolute;
+            top: 48%;
+            left: 52%;
+            transform: translate(-50%, -50%);
+            font-size: 2.5rem;
+            animation: walk 0.5s infinite alternate;
+            z-index: 5;
+        }
+        
+        @keyframes walk {
+            0% { transform: translate(-50%, -50%) rotate(-5deg); }
+            100% { transform: translate(-50%, -50%) rotate(5deg); }
+        }
+        
+        /* 새로고침 버튼 */
+        .refresh-btn {
+            position: absolute;
+            bottom: 200px;
+            right: 16px;
+            width: 48px;
+            height: 48px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            font-size: 1.2rem;
+            cursor: pointer;
+            border: none;
+        }
+        
+        /* 내 위치 버튼 */
+        .my-location-btn {
+            position: absolute;
+            bottom: 260px;
+            right: 16px;
+            width: 48px;
+            height: 48px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            font-size: 1.2rem;
+            cursor: pointer;
+            border: none;
+        }
+        
+        /* 하단 정보 카드 */
+        .bottom-card {
+            position: absolute;
+            bottom: 90px;
+            left: 16px;
+            right: 16px;
+            background: white;
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .card-tabs {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .card-tab {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            background: var(--gray-100);
+            color: var(--gray-600);
+            border: none;
+        }
+        
+        .card-tab.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .store-preview {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .store-preview-thumb {
+            width: 70px;
+            height: 70px;
+            background: var(--gray-200);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+        
+        .store-preview-info {
+            flex: 1;
+        }
+        
+        .store-preview-info h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .store-preview-info .meta {
+            font-size: 0.8rem;
+            color: var(--gray-500);
+            margin-bottom: 8px;
+        }
+        
+        .store-preview-info .benefit {
+            display: inline-block;
+            padding: 4px 10px;
+            background: #FFF3E0;
+            color: var(--primary);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .preview-arrow {
+            display: flex;
+            align-items: center;
+            color: var(--gray-400);
+            font-size: 1.2rem;
+        }
+        
+        /* 하단 네비게이션 */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0 20px;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: var(--gray-400);
+            text-decoration: none;
+            font-size: 0.7rem;
+        }
+        
+        .nav-item.active { color: var(--primary); }
+        .nav-item svg { width: 24px; height: 24px; }
+    </style>
 </head>
 <body>
-    <div class="page-container">
-        <div class="page-title">
-            <h1>🗺️ 내 주변 지도 화면</h1>
-            <p>현재 위치 기반 가맹점 표시</p>
-        </div>
-
-        <div class="device-grid">
-            <div class="phone-frame">
-                <div class="phone-content" style="position: relative;">
-                    <!-- 지도 영역 -->
-                    <div style="height: 100%; background: #E8F4EA; position: relative;">
-                        <!-- 검색바 -->
-                        <div style="position: absolute; top: 16px; left: 16px; right: 16px; z-index: 10;">
-                            <div style="background: white; border-radius: 12px; padding: 14px 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 12px;">
-                                <span>🔍</span>
-                                <span style="color: var(--gray-400);">가맹점 검색</span>
-                            </div>
-                        </div>
-
-                        <!-- 카테고리 필터 -->
-                        <div style="position: absolute; top: 76px; left: 16px; right: 16px; z-index: 10; display: flex; gap: 8px; overflow-x: auto;">
-                            <div style="background: var(--primary); color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.85rem; white-space: nowrap;">전체</div>
-                            <div style="background: white; color: var(--gray-600); padding: 8px 16px; border-radius: 20px; font-size: 0.85rem; white-space: nowrap; box-shadow: 0 1px 4px rgba(0,0,0,0.1);">🍜 음식점</div>
-                            <div style="background: white; color: var(--gray-600); padding: 8px 16px; border-radius: 20px; font-size: 0.85rem; white-space: nowrap; box-shadow: 0 1px 4px rgba(0,0,0,0.1);">☕ 카페</div>
-                            <div style="background: white; color: var(--gray-600); padding: 8px 16px; border-radius: 20px; font-size: 0.85rem; white-space: nowrap; box-shadow: 0 1px 4px rgba(0,0,0,0.1);">🛒 쇼핑</div>
-                        </div>
-
-                        <!-- 지도 핀들 -->
-                        <div style="position: absolute; top: 40%; left: 30%; transform: translate(-50%, -50%);">
-                            <div style="background: var(--primary); color: white; padding: 8px 12px; border-radius: 8px; font-size: 0.8rem; font-weight: 600; box-shadow: 0 2px 8px rgba(255,107,53,0.4);">
-                                🍜 황금룡
-                            </div>
-                            <div style="width: 0; height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent; border-top: 8px solid var(--primary); margin: 0 auto;"></div>
-                        </div>
-
-                        <div style="position: absolute; top: 55%; left: 60%; transform: translate(-50%, -50%);">
-                            <div style="background: var(--secondary); color: white; padding: 8px 12px; border-radius: 8px; font-size: 0.8rem; font-weight: 600; box-shadow: 0 2px 8px rgba(0,78,137,0.4);">
-                                ☕ 바다뷰
-                            </div>
-                            <div style="width: 0; height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent; border-top: 8px solid var(--secondary); margin: 0 auto;"></div>
-                        </div>
-
-                        <div style="position: absolute; top: 35%; left: 70%; transform: translate(-50%, -50%);">
-                            <div style="background: var(--primary); color: white; padding: 8px 12px; border-radius: 8px; font-size: 0.8rem; font-weight: 600; box-shadow: 0 2px 8px rgba(255,107,53,0.4);">
-                                🍣 횟집
-                            </div>
-                            <div style="width: 0; height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent; border-top: 8px solid var(--primary); margin: 0 auto;"></div>
-                        </div>
-
-                        <!-- 현재 위치 -->
-                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-                            <div style="width: 20px; height: 20px; background: #4285F4; border: 3px solid white; border-radius: 50%; box-shadow: 0 2px 8px rgba(66,133,244,0.4);"></div>
-                            <div style="width: 40px; height: 40px; background: rgba(66,133,244,0.2); border-radius: 50%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: -1;"></div>
-                        </div>
-
-                        <!-- 현재 위치 버튼 -->
-                        <div style="position: absolute; bottom: 180px; right: 16px;">
-                            <div style="width: 48px; height: 48px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.15); font-size: 1.2rem;">📍</div>
-                        </div>
-
-                        <!-- 하단 매장 프리뷰 -->
-                        <div style="position: absolute; bottom: 100px; left: 16px; right: 16px;">
-                            <div style="background: white; border-radius: 16px; padding: 16px; box-shadow: 0 4px 16px rgba(0,0,0,0.15); display: flex; gap: 12px;">
-                                <div style="width: 70px; height: 70px; background: var(--gray-200); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 2rem;">🍜</div>
-                                <div style="flex: 1;">
-                                    <h4 style="font-size: 1rem; font-weight: 600; margin-bottom: 4px;">황금룡 짜장</h4>
-                                    <div style="font-size: 0.8rem; color: var(--gray-500); margin-bottom: 8px;">📍 150m · ⭐ 4.8</div>
-                                    <span style="background: #FFF3E0; color: var(--primary); padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">🍖 탕수육 무료</span>
-                                </div>
-                                <div style="display: flex; align-items: center; color: var(--gray-400);">›</div>
-                            </div>
-                        </div>
+    <div class="map-container">
+        <div class="map-area">
+            <!-- 검색바 -->
+            <div class="search-bar">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" placeholder="가맹점, 숨은 여행지 검색">
+            </div>
+            
+            <!-- 필터 탭 -->
+            <div class="filter-tabs">
+                <button class="filter-tab active">전체</button>
+                <button class="filter-tab">📦 보물상자</button>
+                <button class="filter-tab">🍜 음식점</button>
+                <button class="filter-tab">☕ 카페</button>
+                <button class="filter-tab">🛒 쇼핑</button>
+            </div>
+            
+            <!-- 가맹점 핀들 -->
+            <div class="map-pin" style="top: 40%; left: 30%;">
+                <div class="pin-content">🍜 황금룡</div>
+                <div class="pin-arrow"></div>
+            </div>
+            
+            <div class="map-pin" style="top: 55%; left: 65%;">
+                <div class="pin-content cafe">☕ 바다뷰</div>
+                <div class="pin-arrow cafe"></div>
+            </div>
+            
+            <div class="map-pin" style="top: 35%; left: 75%;">
+                <div class="pin-content">🍣 횟집</div>
+                <div class="pin-arrow"></div>
+            </div>
+            
+            <!-- 보물상자 (숨은 여행지) -->
+            <div class="treasure-pin" style="top: 25%; left: 45%;" onclick="location.href='treasure.html'">
+                <div class="treasure-box-icon">
+                    📦
+                    <span class="treasure-grade gold">금</span>
+                </div>
+            </div>
+            
+            <div class="treasure-pin" style="top: 65%; left: 25%;" onclick="location.href='treasure.html'">
+                <div class="treasure-box-icon">
+                    📦
+                    <span class="treasure-grade silver">은</span>
+                </div>
+            </div>
+            
+            <div class="treasure-pin" style="top: 70%; left: 80%;" onclick="location.href='treasure.html'">
+                <div class="treasure-box-icon">
+                    📦
+                    <span class="treasure-grade bronze">동</span>
+                </div>
+            </div>
+            
+            <!-- 현재 위치 + 캐릭터 -->
+            <div class="current-location">
+                <div class="location-pulse"></div>
+                <div class="location-dot"></div>
+            </div>
+            
+            <div class="character">🧑</div>
+            
+            <!-- 버튼들 -->
+            <button class="my-location-btn" onclick="alert('현재 위치로 이동합니다')">📍</button>
+            <button class="refresh-btn" onclick="alert('주변 정보를 갱신합니다')">🔄</button>
+            
+            <!-- 하단 정보 카드 -->
+            <div class="bottom-card">
+                <div class="card-header">
+                    <div class="card-tabs">
+                        <button class="card-tab active">가맹점</button>
+                        <button class="card-tab">보물상자</button>
                     </div>
                 </div>
-
-                <!-- 하단 탭 바 -->
-                <nav class="bottom-tab">
-                    <div class="tab-item">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                        <span>홈</span>
+                <a href="store-detail.html" style="text-decoration: none; color: inherit;">
+                    <div class="store-preview">
+                        <div class="store-preview-thumb">🍜</div>
+                        <div class="store-preview-info">
+                            <h4>황금룡 짜장</h4>
+                            <div class="meta">📍 150m · ⭐ 4.8</div>
+                            <span class="benefit">🎁 탕수육 무료</span>
+                        </div>
+                        <div class="preview-arrow">›</div>
                     </div>
-                    <div class="tab-item active">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z"/></svg>
-                        <span>내주변</span>
-                    </div>
-                    <div class="tab-item">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                        <span>여행권</span>
-                    </div>
-                    <div class="tab-item">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
-                        <span>로또</span>
-                    </div>
-                    <div class="tab-item">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                        <span>마이</span>
-                    </div>
-                </nav>
+                </a>
             </div>
         </div>
-
-        <div style="text-align: center; margin-top: 40px;">
-            <a href="../index.html" style="color: white; text-decoration: none; opacity: 0.8;">← 전체 화면 목록으로</a>
-        </div>
+        
+        <!-- 하단 네비게이션 -->
+        <nav class="bottom-nav">
+            <a href="home.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+                <span>홈</span>
+            </a>
+            <a href="map.html" class="nav-item active">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z"/></svg>
+                <span>지도</span>
+            </a>
+            <a href="treasure.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M7 8V6a5 5 0 0 1 10 0v2"/></svg>
+                <span>보물상자</span>
+            </a>
+            <a href="lotto.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>
+                <span>로또</span>
+            </a>
+            <a href="mypage.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <span>마이</span>
+            </a>
+        </nav>
     </div>
 </body>
 </html>
-

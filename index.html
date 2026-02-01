@@ -10,29 +10,37 @@
 <body>
     <div class="wireframe-container">
         <header class="main-header">
-            <h1>🏝️ 썸타요 MVP 와이어프레임</h1>
-            <p>여행권 서비스 프로토타입</p>
+            <h1>🏝️ 썸타요 와이어프레임</h1>
+            <p>숨은 여행지를 찾아 떠나는 앱</p>
         </header>
 
         <nav class="screen-nav">
+            <!-- 여행객 앱 -->
             <div class="nav-section">
-                <a href="tourist/login.html">🔐 로그인/회원가입</a>
+                <h3>🧳 여행객 앱</h3>
+                <a href="tourist/login.html">🔐 로그인 (카카오)</a>
                 <a href="tourist/home.html">🏠 홈 화면</a>
-                <a href="tourist/map.html">🗺️ 내 주변 지도</a>
+                <a href="tourist/map.html">🗺️ 지도 (가맹점 + 보물상자)</a>
                 <a href="tourist/store-detail.html">🏬 가맹점 상세</a>
-                <a href="tourist/ticket.html">📱 여행권(QR)</a>
-                <a href="tourist/ticket-register.html">🎫 티켓 등록</a>
+                <a href="tourist/ticket.html">🎫 여행권 (QR)</a>
+                <a href="tourist/treasure.html">📦 보물상자 (Gacha)</a>
                 <a href="tourist/lotto.html">🎰 로또함</a>
+                <a href="tourist/my-prizes.html">🎁 내 경품</a>
+                <a href="tourist/review.html">✍️ 리뷰 작성</a>
                 <a href="tourist/mypage.html">👤 마이페이지</a>
             </div>
+
+            <!-- 가맹점주 모드 -->
             <div class="nav-section">
-                <h3>🏪 가맹점주 모드 (5개)</h3>
+                <h3>🏪 가맹점주 모드</h3>
                 <a href="merchant/login.html">🔑 점주 로그인</a>
-                <a href="merchant/scan.html">📷 스캔 대기</a>
+                <a href="merchant/scan.html">📷 QR 스캔</a>
                 <a href="merchant/info.html">📊 가맹점 정보/통계</a>
             </div>
+
+            <!-- 관리자 웹 -->
             <div class="nav-section">
-                <h3>🖥️ 관리자 웹 (12개)</h3>
+                <h3>🖥️ 관리자 웹</h3>
                 <a href="admin/login.html">🔐 관리자 로그인</a>
                 <a href="admin/dashboard.html">📊 대시보드</a>
                 <a href="admin/members.html">👥 회원 관리</a>
@@ -42,6 +50,18 @@
             </div>
         </nav>
 
+        <!-- 핵심 기능 안내 -->
+        <div class="info-card">
+            <h2>🎮 핵심 게이미피케이션</h2>
+            <div style="padding: 20px 0; line-height: 1.8; color: var(--gray-700);">
+                <p><strong>1. 가맹점 QR 인증</strong> → 로또번호 + 망치 획득</p>
+                <p><strong>2. 숨은 여행지 GPS 도착</strong> → 보물상자 활성화</p>
+                <p><strong>3. 망치로 상자 열기</strong> → 확률형 경품 (금/은/동)</p>
+                <p><strong>4. 리뷰 작성</strong> → 추가 망치/로또번호</p>
+            </div>
+        </div>
+
+        <!-- 화면 통계 -->
         <div class="info-card">
             <h2>📊 화면 구성</h2>
             <div class="stats">
@@ -50,15 +70,15 @@
                     <span class="stat-label">여행객 앱</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-number">5</span>
-                    <span class="stat-label">가맹점주 모드</span>
+                    <span class="stat-number">3</span>
+                    <span class="stat-label">가맹점주</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-number">12</span>
+                    <span class="stat-number">6</span>
                     <span class="stat-label">관리자 웹</span>
                 </div>
                 <div class="stat-item total">
-                    <span class="stat-number">27</span>
+                    <span class="stat-number">19</span>
                     <span class="stat-label">총 화면</span>
                 </div>
             </div>
@@ -66,4 +86,3 @@
     </div>
 </body>
 </html>
-
